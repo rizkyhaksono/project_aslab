@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:i_lab/Screens/Login/components/background.dart';
 import 'package:i_lab/Screens/Login/components/rounded_input_field.dart';
 import 'package:i_lab/Screens/Login/components/rounded_password_field.dart';
 import '../login_page_state.dart';
-import 'Background.dart';
 import 'login_button_field.dart';
 
 class BodyLogin extends StatelessWidget {

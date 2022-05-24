@@ -1,8 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../Dashboard/main_dashboard.dart';
+
+var access_token = "";
+var emailUser = "";
+var nimUser = "";
+var fullNameUser = "";
 
 class LoginPageState extends StatefulWidget {
   const LoginPageState({Key? key}) : super(key: key);
@@ -10,12 +16,6 @@ class LoginPageState extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
-
-// global key for form validation
-var access_token = "";
-var emailUser = "";
-var nimUser = "";
-var fullNameUser = "";
 
 class _LoginPageState extends State<LoginPageState> {
   // nim, pass temporary data
@@ -125,7 +125,8 @@ class _LoginPageState extends State<LoginPageState> {
                     margin: EdgeInsets.only(top: 20),
                     child: ElevatedButton(
                       onPressed: () {
-                        login();
+                        // login();
+                        accessToken();
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Color.fromARGB(255, 255, 102, 0),
@@ -181,15 +182,16 @@ class _LoginPageState extends State<LoginPageState> {
         }),
       );
 
-      accessToken();
-      accessData();
-
       if (response.statusCode == 200) {
         // direct to main page
+        // Timer(Duration(seconds: 1), (() {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => MainDashboard()));
+        // }));
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => MainDashboard()));
         // print the data
-        print("Response Status: ${response.statusCode}");
+        // print("Response Status: ${response.statusCode}");
         // print(nimController.text);
         // print(passController.text);
       } else {
@@ -214,7 +216,8 @@ class _LoginPageState extends State<LoginPageState> {
         var jsonResponse = json.decode(response.body)['access_token'];
 
         access_token = jsonResponse;
-        print("Acces Token : $access_token");
+        // print("Acces Token : $access_token");
+        accessData();
       } catch (e) {
         print("error");
       }
@@ -242,22 +245,15 @@ class _LoginPageState extends State<LoginPageState> {
         emailUser = jsonResponse2;
         fullNameUser = jsonResponse3;
 
+        login();
+
         // debugging
-        print("Email     : $emailUser");
-        print("NIM       : $nimUser");
-        print("Full Name : $fullNameUser");
+        // print("Email     : $emailUser");
+        // print("NIM       : $nimUser");
+        // print("Full Name : $fullNameUser");
       } catch (e) {
         print("error");
       }
     });
-  }
-
-  // logout api
-  Future<void> logout() async {
-    await http.post(
-        Uri.parse("https://api.infotech.umm.ac.id/dotlab/api/v1/auth/logout"),
-        headers: {
-          "Authorization": "Bearer $access_token",
-        });
   }
 }

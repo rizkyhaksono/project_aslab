@@ -1,9 +1,11 @@
-import 'dart:ui';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:i_lab/Screens/Login/login_page_state.dart';
+
+var message_logout = "";
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({Key? key}) : super(key: key);
@@ -22,16 +24,18 @@ class _MainDashboardState extends State<MainDashboard> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // main page
-          Text("Welcome User ${fullNameUser}"),
-          Text("NIM : ${nimUser}"),
-          Text("Email : ${emailUser}"),
+          Text("Welcome User $fullNameUser"),
+          Text("NIM : $nimUser"),
+          Text("Email : $emailUser"),
           SizedBox(
-            height: 50,
+            height: 20,
           ),
           OutlinedButton.icon(
             // logout button
             onPressed: () {
-              Navigator.pop(context);
+              logout();
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (context) => LoginPageState()));
             },
             icon: Icon(
               Icons.exit_to_app,
@@ -42,5 +46,26 @@ class _MainDashboardState extends State<MainDashboard> {
         ],
       ),
     )));
+  }
+
+  Future<void> logout() async {
+    http.post(
+        Uri.parse("https://api.infotech.umm.ac.id/dotlab/api/v1/auth/logout"),
+        headers: {
+          "Authorization": "Bearer $access_token",
+        }).then((access) {
+      try {
+        var jsonResponse = json.decode(access.body)['message'];
+        // return to global variable
+        message_logout = jsonResponse;
+        // debugging
+        print("Message     : $message_logout");
+        // return to login page
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginPageState()));
+      } catch (e) {
+        print("error");
+      }
+    });
   }
 }
