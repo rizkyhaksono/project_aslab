@@ -195,12 +195,12 @@ class _LoginPageState extends State<LoginPageState> {
         // print(nimController.text);
         // print(passController.text);
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Invalid Credentials")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("NIM atau Password anda salah!")));
       }
     } else {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Blank Field is Not Allowed!")));
+          .showSnackBar(SnackBar(content: Text("data tidak boleh kosong!")));
     }
   }
 
@@ -219,7 +219,8 @@ class _LoginPageState extends State<LoginPageState> {
         // print("Acces Token : $access_token");
         accessData();
       } catch (e) {
-        print("error");
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("NIM atau Password anda salah!")));
       }
     });
   }
