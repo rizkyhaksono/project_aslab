@@ -1,73 +1,76 @@
 import 'package:flutter/material.dart';
 
 import 'package:i_lab/Screens/Cart/Cart.dart';
+import 'package:i_lab/constants.dart';
 
 class BodyCart extends StatelessWidget {
-  const BodyCart({Key? key}) : super(key: key);
+  BodyCart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: backgroundcolor,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-        child: wItemList(context),
+        child: listCart(context),
       ),
     );
   }
 
-  Widget wItemList(BuildContext context) {
+  Widget listCart(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: 1,
+        itemCount: 3,
         itemBuilder: (context, index) {
           return Container(
             padding:
-                const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 10),
-            margin: const EdgeInsets.symmetric(vertical: 5),
+                const EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 20),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
               children: [
-                Image.network(
-                  "https://media.istockphoto.com/vectors/blazer-clothes-suit-icon-black-version-vector-id1281580770?k=20&m=1281580770&s=170667a&w=0&h=WjmSlUAR0u0EY71klXF81CLnJqjWEIpGAvsx2TJgKJQ=",
-                  width: size.width / 4,
-                  height: size.width / 4,
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Image.network(
+                    "https://media.istockphoto.com/vectors/blazer-clothes-suit-icon-black-version-vector-id1281580770?k=20&m=1281580770&s=170667a&w=0&h=WjmSlUAR0u0EY71klXF81CLnJqjWEIpGAvsx2TJgKJQ=",
+                    width: size.width / 4,
+                    height: size.width / 4,
+                  ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Flexible(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
                         "Jaket Informatika Lab",
                         style: TextStyle(
                             fontFamily: "Poppins",
-                            fontSize: 14,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
                             width: 30,
                             height: 30,
                             child: FloatingActionButton(
+                              heroTag: "btn1",
                               backgroundColor: const Color(0xFF003C72),
                               // dicrement numbers of items
                               onPressed: () {},
-                              child: const Icon(
-                                Icons.exposure_minus_1,
-                                size: 20,
-                              ),
+                              child: const Text("-",
+                                  style: TextStyle(fontSize: 20)),
                               mini: true,
                             ),
                           ),
@@ -86,19 +89,17 @@ class BodyCart extends StatelessWidget {
                             width: 30,
                             height: 30,
                             child: FloatingActionButton(
+                              heroTag: "btn2",
                               backgroundColor: const Color(0xFF003C72),
-                              // increment number of items
+                              // dicrement numbers of items
                               onPressed: () {},
-                              child: const Icon(
-                                Icons.plus_one_rounded,
-                                size: 20,
-                              ),
+                              child: const Text("+",
+                                  style: TextStyle(fontSize: 20)),
                               mini: true,
                             ),
-                          )
+                          ),
                         ],
                       ),
-                      Row()
                     ],
                   ),
                 ),

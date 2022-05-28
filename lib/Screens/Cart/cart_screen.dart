@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:i_lab/Screens/Cart/Cart.dart';
 import 'package:i_lab/Screens/Cart/body_cart.dart';
 import 'package:i_lab/Screens/Login/login_page_state.dart';
+import 'package:i_lab/constants.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -19,8 +20,8 @@ class CartScreen extends StatelessWidget {
 
   AppBar anjayBro(BuildContext context) {
     return AppBar(
-      elevation: 0.5,
-      backgroundColor: Colors.white,
+      elevation: 6,
+      backgroundColor: kPrimaryDarkColor,
       centerTitle: true,
       leading: IconButton(
         onPressed: () {
@@ -28,16 +29,16 @@ class CartScreen extends StatelessWidget {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => LoginPageState()));
         },
-        icon: Icon(Icons.arrow_back_outlined),
-        color: Colors.black,
+        icon: const Icon(Icons.arrow_back_outlined),
+        color: Colors.white,
       ),
       title: Column(
         children: [
           // title
-          Text(
+          const Text(
             "Your Cart",
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontFamily: "Poppins",
               fontSize: 18,
             ),
@@ -46,8 +47,8 @@ class CartScreen extends StatelessWidget {
           Text(
             // dummy datas from Cart.dart
             "${demoCarts.length} items",
-            style: TextStyle(
-              color: Colors.black,
+            style: const TextStyle(
+              color: Colors.white,
               fontFamily: "Poppins",
               fontSize: 14,
             ),
