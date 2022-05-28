@@ -39,6 +39,7 @@ dependencies:
     shared_preferences: ^0.5.5
     flutter_bloc: ^2.1.1
     get_it: ^3.0.3
+    get: ^4.6.5
 
 dev_dependencies:
     flutter_test:
@@ -101,7 +102,7 @@ flutter:
                 weight: 700
               - asset: fonts/Poppins_Italic.ttf
                 style: italic
-              - asset: fonts/Poppins_light.ttf
+              - asset: fonts/Poppins_Light.ttf
                 weight: 300
               - asset: fonts/Poppins_Medium.ttf
                 weight: 500

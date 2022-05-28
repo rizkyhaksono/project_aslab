@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:i_lab/Screens/Cart/cart_screen.dart';
 import '../Dashboard/main_dashboard.dart';
 
 var access_token = "";
@@ -189,7 +190,7 @@ class _LoginPageState extends State<LoginPageState> {
         //       MaterialPageRoute(builder: (context) => MainDashboard()));
         // }));
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MainDashboard()));
+            context, MaterialPageRoute(builder: (context) => CartScreen()));
         // print the data
         // print("Response Status: ${response.statusCode}");
         // print(nimController.text);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:i_lab/Screens/Cart/cart_screen.dart';
 import 'components/body.dart';
 import 'login_page_state.dart';
 
@@ -8,7 +9,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LoginPageState(),
+      // body: const LoginPageState(),
+      body: CartScreen(),
     );
   }
 }
