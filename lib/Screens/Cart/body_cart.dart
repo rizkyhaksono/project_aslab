@@ -65,7 +65,7 @@ class BodyCart extends StatelessWidget {
                             width: 30,
                             height: 30,
                             child: FloatingActionButton(
-                              heroTag: "btn1",
+                              heroTag: null,
                               backgroundColor: const Color(0xFF003C72),
                               // dicrement numbers of items
                               onPressed: () {},
@@ -89,7 +89,7 @@ class BodyCart extends StatelessWidget {
                             width: 30,
                             height: 30,
                             child: FloatingActionButton(
-                              heroTag: "btn2",
+                              heroTag: null,
                               backgroundColor: const Color(0xFF003C72),
                               // dicrement numbers of items
                               onPressed: () {},
