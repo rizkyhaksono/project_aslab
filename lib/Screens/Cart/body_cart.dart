@@ -106,7 +106,7 @@ class _BodyCartState extends State<BodyCart> {
                               // decrease numbers of items
                               onPressed: () {
                                 setState(() {
-                                  demoCarts.length--;
+                                  demoCarts.length++;
                                 });
                               },
                               child: const Icon(
