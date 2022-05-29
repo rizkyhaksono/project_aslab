@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:i_lab/Screens/Cart/Cart.dart';
 import 'package:i_lab/constants.dart';
 
-class BodyCart extends StatelessWidget {
-  BodyCart({Key? key}) : super(key: key);
+class BodyCart extends StatefulWidget {
+  const BodyCart({Key? key}) : super(key: key);
 
+  @override
+  State<BodyCart> createState() => _BodyCartState();
+}
+
+class _BodyCartState extends State<BodyCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,9 +24,10 @@ class BodyCart extends StatelessWidget {
 
   Widget listCart(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: 3,
+        itemCount: 1,
         itemBuilder: (context, index) {
           return Container(
             padding:
@@ -32,7 +38,7 @@ class BodyCart extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
-              children: [
+              children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Image.network(
@@ -47,7 +53,7 @@ class BodyCart extends StatelessWidget {
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                    children: <Widget>[
                       const Text(
                         "Jaket Informatika Lab",
                         style: TextStyle(
@@ -60,7 +66,7 @@ class BodyCart extends StatelessWidget {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           SizedBox(
                             width: 30,
                             height: 30,
@@ -68,9 +74,15 @@ class BodyCart extends StatelessWidget {
                               heroTag: null,
                               backgroundColor: const Color(0xFF003C72),
                               // dicrement numbers of items
-                              onPressed: () {},
-                              child: const Text("-",
-                                  style: TextStyle(fontSize: 20)),
+                              onPressed: () {
+                                setState(() {
+                                  demoCarts.length--;
+                                });
+                              },
+                              child: const Icon(
+                                Icons.remove,
+                                size: 20,
+                              ),
                               mini: true,
                             ),
                           ),
@@ -91,10 +103,16 @@ class BodyCart extends StatelessWidget {
                             child: FloatingActionButton(
                               heroTag: null,
                               backgroundColor: const Color(0xFF003C72),
-                              // dicrement numbers of items
-                              onPressed: () {},
-                              child: const Text("+",
-                                  style: TextStyle(fontSize: 20)),
+                              // decrease numbers of items
+                              onPressed: () {
+                                setState(() {
+                                  demoCarts.length--;
+                                });
+                              },
+                              child: const Icon(
+                                Icons.add,
+                                size: 20,
+                              ),
                               mini: true,
                             ),
                           ),
