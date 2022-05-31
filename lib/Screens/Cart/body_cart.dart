@@ -14,7 +14,7 @@ class _BodyCartState extends State<BodyCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundcolor,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: listCart(context),
@@ -23,18 +23,19 @@ class _BodyCartState extends State<BodyCart> {
   }
 
   Widget listCart(BuildContext context) {
+    var carts = demoCarts.length;
     var size = MediaQuery.of(context).size;
 
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: 1,
+        itemCount: 4,
         itemBuilder: (context, index) {
           return Container(
             padding:
                 const EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 20),
             margin: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Color(0xFFC4C4C4),
               borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
@@ -54,8 +55,8 @@ class _BodyCartState extends State<BodyCart> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      const Text(
-                        "Jaket Informatika Lab",
+                      Text(
+                        "${demoKeranjang[0].product}",
                         style: TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 18,
@@ -76,7 +77,14 @@ class _BodyCartState extends State<BodyCart> {
                               // dicrement numbers of items
                               onPressed: () {
                                 setState(() {
-                                  demoCarts.length--;
+                                  if (demoCarts.length == 0) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content:
+                                                Text("Pesanan anda kosong!")));
+                                  } else {
+                                    demoCarts.length--;
+                                  }
                                 });
                               },
                               child: const Icon(
@@ -106,7 +114,7 @@ class _BodyCartState extends State<BodyCart> {
                               // decrease numbers of items
                               onPressed: () {
                                 setState(() {
-                                  demoCarts.length++;
+                                  // error
                                 });
                               },
                               child: const Icon(

@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPageState> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 100,
         ),
         child: SingleChildScrollView(
@@ -55,18 +55,18 @@ class _LoginPageState extends State<LoginPageState> {
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(left: 20),
-                    margin: EdgeInsets.only(
+                    padding: const EdgeInsets.only(left: 20),
+                    margin: const EdgeInsets.only(
                         top: 20, bottom: 20, right: 40, left: 40),
                     child: TextFormField(
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 12,
                           color: Colors.black),
                       controller: nimController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "NIM",
                         labelStyle: TextStyle(
                           fontFamily: "Poppins",
@@ -87,17 +87,17 @@ class _LoginPageState extends State<LoginPageState> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 20),
-                    margin:
-                        EdgeInsets.only(top: 0, bottom: 0, right: 40, left: 40),
+                    padding: const EdgeInsets.only(left: 20),
+                    margin: const EdgeInsets.only(
+                        top: 0, bottom: 0, right: 40, left: 40),
                     child: TextFormField(
                       controller: passController,
                       obscureText: true,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 12,
                           color: Colors.black),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "Password",
                         labelStyle: TextStyle(
                           fontFamily: "Poppins",
@@ -123,21 +123,21 @@ class _LoginPageState extends State<LoginPageState> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
                       onPressed: () {
                         // login();
                         accessToken();
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 255, 102, 0),
+                        primary: const Color.fromARGB(255, 255, 102, 0),
                         minimumSize: const Size(100, 38),
                         alignment: Alignment.center,
                         animationDuration: const Duration(milliseconds: 200),
                         elevation: 5,
                         shape: const StadiumBorder(),
                       ),
-                      child: Text(
+                      child: const Text(
                         "Login",
                         style: TextStyle(
                           color: Colors.white,
@@ -153,7 +153,7 @@ class _LoginPageState extends State<LoginPageState> {
                     height: 260,
                     child: Stack(
                       alignment: Alignment.center,
-                      children: [
+                      children: <Widget>[
                         Positioned(
                             bottom: 0,
                             child: Image.asset(
