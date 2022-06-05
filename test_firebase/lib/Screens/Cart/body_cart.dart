@@ -25,7 +25,7 @@ class _BodyCartState extends State<BodyCart> {
 
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: 4,
+        itemCount: 1,
         itemBuilder: (context, index) {
           return Container(
             padding:
@@ -53,7 +53,7 @@ class _BodyCartState extends State<BodyCart> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "",
+                        "Jas Informatika Lab",
                         style: const TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 18,
@@ -86,7 +86,8 @@ class _BodyCartState extends State<BodyCart> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "${demoKeranjang.length} x Rp. 100.000",
+                              // belum ke fetch database
+                              "Size : M",
                               style: const TextStyle(
                                   fontSize: 14.0,
                                   fontFamily: "Poppins",

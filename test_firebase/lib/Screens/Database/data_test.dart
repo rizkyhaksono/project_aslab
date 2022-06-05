@@ -7,9 +7,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:test_firebase/Screens/Login/login_page_state.dart';
 
-var nim_Db;
-var nama_Db;
+var isOrder_Db;
 var ukuran_Db;
+var jumlah_Db;
 
 class DataTest extends StatelessWidget {
   const DataTest({Key? key}) : super(key: key);
@@ -42,7 +42,7 @@ class _MyDatabase extends State<MyDatabase> {
     final _dbRef = FirebaseDatabase.instance.reference();
 
     var id_bro =
-        FirebaseDatabase.instance.reference().child('SampleData').push().key;
+        FirebaseDatabase.instance.reference().child('SampleData').push();
 
     return Scaffold(
       appBar: AppBar(
@@ -60,10 +60,8 @@ class _MyDatabase extends State<MyDatabase> {
             ElevatedButton(
                 onPressed: () async {
                   var tableRef = _dbRef.child("JasAslab");
-                  await tableRef.child(id_bro).set({
-                    'NIM': nimUser,
-                    'Name': fullNameUser,
-                    'Email': emailUser,
+                  await tableRef.child('data_user').set({
+                    'isOrder': true,
                     'Ukuran': "S",
                     'Jumlah': 1,
                   });
@@ -75,11 +73,9 @@ class _MyDatabase extends State<MyDatabase> {
             ElevatedButton(
                 onPressed: () async {
                   var tableRef = _dbRef.child("JasAslab");
-                  await tableRef.child(id_bro).update({
-                    'NIM': nimUser,
-                    'Name': fullNameUser,
-                    'Email': emailUser,
-                    'Ukuran': "M",
+                  await tableRef.child("data_user").update({
+                    'isOrder': true,
+                    'Ukuran': "L",
                     'Jumlah': 1,
                   });
                   tableRef.push();
@@ -94,9 +90,10 @@ class _MyDatabase extends State<MyDatabase> {
                     await _dbRef.child("JasAslab").onChildAdded.listen(
                         (Event event) {
                       var fullData = event.snapshot.value;
-                      nim_Db = fullData['NIM'];
+                      isOrder_Db = fullData['isOrder'];
                       ukuran_Db = fullData['Ukuran'];
-                      print(ukuran_Db);
+                      jumlah_Db = fullData['Jumlah'];
+                      print(fullData);
                     }, onError: (Object error) {
                       print(error);
                     });
@@ -106,12 +103,14 @@ class _MyDatabase extends State<MyDatabase> {
               },
               child: const Text("Read Data"),
             ),
+            Text("Order  : $isOrder_Db"),
             Text("Ukuran : $ukuran_Db"),
+            Text("Jumlah : $jumlah_Db"),
             // remove data function
             ElevatedButton(
               onPressed: () async {
-                var tableRef = _dbRef.child("SampleData");
-                await tableRef.child(id_bro).remove();
+                var tableRef = _dbRef.child("JasAslab");
+                await tableRef.child("data_user").remove();
                 print("Remove called");
               },
               child: const Text("Delete Data"),

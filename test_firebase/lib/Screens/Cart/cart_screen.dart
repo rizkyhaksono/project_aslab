@@ -25,9 +25,9 @@ class CartScreen extends StatelessWidget {
           children: <Widget>[
             Container(
               margin: const EdgeInsets.only(top: 10),
-              child: Text(
-                "Total: Rp. ${demoKeranjang.length}",
-                style: const TextStyle(
+              child: const Text(
+                "Total: Rp. 100.000",
+                style: TextStyle(
                   fontSize: 20,
                   fontFamily: "Poppins",
                   fontWeight: FontWeight.bold,
@@ -62,7 +62,7 @@ class CartScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return LoginPageState();
+                    return const LoginPageState();
                   }));
                 },
                 child: const Text(
@@ -101,7 +101,7 @@ class CartScreen extends StatelessWidget {
           // detail order product
           Text(
             // dummy datas from Cart.dart
-            "${demoKeranjang.length} items",
+            "1 items",
             style: const TextStyle(
               color: Colors.white,
               fontFamily: "Poppins",
