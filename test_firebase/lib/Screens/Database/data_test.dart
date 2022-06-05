@@ -1,15 +1,11 @@
 import 'dart:async';
 
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:test_firebase/Screens/Login/login_page_state.dart';
 
-var isOrder_Db;
-var ukuran_Db;
-var jumlah_Db;
+var isOrderDb;
+var ukuranDb;
+var jumlahDb;
 
 class DataTest extends StatelessWidget {
   const DataTest({Key? key}) : super(key: key);
@@ -41,7 +37,7 @@ class _MyDatabase extends State<MyDatabase> {
   Widget build(BuildContext context) {
     final _dbRef = FirebaseDatabase.instance.reference();
 
-    var id_bro =
+    var idBro =
         FirebaseDatabase.instance.reference().child('SampleData').push();
 
     return Scaffold(
@@ -84,15 +80,14 @@ class _MyDatabase extends State<MyDatabase> {
                 child: const Text("Update Data")),
             // delete data function
             ElevatedButton(
-              onPressed: () async {
-                await _dbRef.once().then((DataSnapshot snapshot) async {
-                  snapshot.value.forEach((key, value) async {
-                    await _dbRef.child("JasAslab").onChildAdded.listen(
-                        (Event event) {
+              onPressed: () {
+                _dbRef.once().then((DataSnapshot snapshot) async {
+                  await snapshot.value.forEach((key, value) {
+                    _dbRef.child("JasAslab").onChildAdded.listen((Event event) {
                       var fullData = event.snapshot.value;
-                      isOrder_Db = fullData['isOrder'];
-                      ukuran_Db = fullData['Ukuran'];
-                      jumlah_Db = fullData['Jumlah'];
+                      isOrderDb = fullData['isOrder'];
+                      ukuranDb = fullData['Ukuran'];
+                      jumlahDb = fullData['Jumlah'];
                       print(fullData);
                     }, onError: (Object error) {
                       print(error);
@@ -103,9 +98,6 @@ class _MyDatabase extends State<MyDatabase> {
               },
               child: const Text("Read Data"),
             ),
-            Text("Order  : $isOrder_Db"),
-            Text("Ukuran : $ukuran_Db"),
-            Text("Jumlah : $jumlah_Db"),
             // remove data function
             ElevatedButton(
               onPressed: () async {
@@ -115,9 +107,44 @@ class _MyDatabase extends State<MyDatabase> {
               },
               child: const Text("Delete Data"),
             ),
+
+            Text("Order  : ${isOrderDb}"),
+            Text("Ukuran : ${ukuranDb}"),
+            Text("Jumlah : ${jumlahDb}"),
           ],
         ),
       ),
     );
   }
 }
+
+Future<bool> orderAja() async =>
+    FirebaseDatabase.instance.reference().child('JasAslab').once().then(
+        (DataSnapshot snapshot) async => await snapshot.value.forEach((value) {
+              FirebaseDatabase.instance
+                  .reference()
+                  .child("data_user")
+                  .onChildAdded
+                  .listen((Event event) {
+                var fullData = event.snapshot.value;
+                isOrderDb = fullData['isOrder'];
+                ukuranDb = fullData['Ukuran'];
+                jumlahDb = fullData['Jumlah'];
+              });
+            }));
+
+// var isOrder_Db = FirebaseDatabase.instance
+//     .reference()
+//     .once()
+//     .then((DataSnapshot snapshot) async {
+//   await snapshot.value.forEach((value) {
+//     FirebaseDatabase.instance
+//         .reference()
+//         .child("JasAslab")
+//         .onChildAdded
+//         .listen((Event event) {
+//       var fullData = event.snapshot.value;
+//       isOrder_Db = fullData['isOrder'];
+//     });
+//   });
+// });
