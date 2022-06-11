@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -35,10 +36,18 @@ class MyDatabase extends StatefulWidget {
 class _MyDatabase extends State<MyDatabase> {
   @override
   Widget build(BuildContext context) {
-    final _dbRef = FirebaseDatabase.instance.reference();
-
-    var idBro =
-        FirebaseDatabase.instance.reference().child('SampleData').push();
+    final _dbRef = FirebaseDatabase.instance.reference().child('JasAslab');
+    _MyDatabase() {
+      setState(() {
+        _dbRef.once().then((DataSnapshot snap) {
+          var keys = snap.value.keys;
+          var data = snap.value;
+          isOrderDb = data['isOrder'];
+          ukuranDb = data['ukuran'];
+          jumlahDb = data['jumlah'];
+        });
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -55,12 +64,30 @@ class _MyDatabase extends State<MyDatabase> {
             // save data function
             ElevatedButton(
                 onPressed: () async {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => DataTest()));
                   var tableRef = _dbRef.child("JasAslab");
                   await tableRef.child('data_user').set({
                     'isOrder': true,
                     'Ukuran': "S",
                     'Jumlah': 1,
                   });
+
+                  await _dbRef.once().then((DataSnapshot snapshot) {
+                    snapshot.value.forEach((key, value) {
+                      _dbRef.child("JasAslab").onChildAdded.listen(
+                          (Event event) {
+                        var fullData = event.snapshot.value;
+                        isOrderDb = fullData['isOrder'];
+                        ukuranDb = fullData['Ukuran'];
+                        jumlahDb = fullData['Jumlah'];
+                        print(fullData);
+                      }, onError: (Object error) {
+                        print(error);
+                      });
+                    });
+                  });
+
                   tableRef.push();
                   print("Push called");
                 },
@@ -68,21 +95,41 @@ class _MyDatabase extends State<MyDatabase> {
             // update data function
             ElevatedButton(
                 onPressed: () async {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => DataTest()));
                   var tableRef = _dbRef.child("JasAslab");
                   await tableRef.child("data_user").update({
                     'isOrder': true,
-                    'Ukuran': "L",
+                    'Ukuran': "XL",
                     'Jumlah': 1,
                   });
+
+                  await _dbRef.once().then((DataSnapshot snapshot) {
+                    snapshot.value.forEach((key, value) {
+                      _dbRef.child("JasAslab").onChildAdded.listen(
+                          (Event event) {
+                        var fullData = event.snapshot.value;
+                        isOrderDb = fullData['isOrder'];
+                        ukuranDb = fullData['Ukuran'];
+                        jumlahDb = fullData['Jumlah'];
+                        print(fullData);
+                      }, onError: (Object error) {
+                        print(error);
+                      });
+                    });
+                  });
+
                   tableRef.push();
                   print("Update called");
                 },
                 child: const Text("Update Data")),
-            // delete data function
+            // display data function
             ElevatedButton(
-              onPressed: () {
-                _dbRef.once().then((DataSnapshot snapshot) async {
-                  await snapshot.value.forEach((key, value) {
+              onPressed: () async {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => DataTest()));
+                await _dbRef.once().then((DataSnapshot snapshot) {
+                  snapshot.value.forEach((key, value) {
                     _dbRef.child("JasAslab").onChildAdded.listen((Event event) {
                       var fullData = event.snapshot.value;
                       isOrderDb = fullData['isOrder'];
@@ -101,6 +148,13 @@ class _MyDatabase extends State<MyDatabase> {
             // remove data function
             ElevatedButton(
               onPressed: () async {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => DataTest()));
+
+                isOrderDb = false;
+                ukuranDb = "";
+                jumlahDb = 0;
+
                 var tableRef = _dbRef.child("JasAslab");
                 await tableRef.child("data_user").remove();
                 print("Remove called");
@@ -118,33 +172,20 @@ class _MyDatabase extends State<MyDatabase> {
   }
 }
 
-Future<bool> orderAja() async =>
+Future<void> orderAja() =>
     FirebaseDatabase.instance.reference().child('JasAslab').once().then(
-        (DataSnapshot snapshot) async => await snapshot.value.forEach((value) {
+          (DataSnapshot snapshot) => snapshot.value.forEach(
+            (value) {
               FirebaseDatabase.instance
                   .reference()
                   .child("data_user")
                   .onChildAdded
-                  .listen((Event event) {
-                var fullData = event.snapshot.value;
-                isOrderDb = fullData['isOrder'];
-                ukuranDb = fullData['Ukuran'];
-                jumlahDb = fullData['Jumlah'];
-              });
-            }));
-
-// var isOrder_Db = FirebaseDatabase.instance
-//     .reference()
-//     .once()
-//     .then((DataSnapshot snapshot) async {
-//   await snapshot.value.forEach((value) {
-//     FirebaseDatabase.instance
-//         .reference()
-//         .child("JasAslab")
-//         .onChildAdded
-//         .listen((Event event) {
-//       var fullData = event.snapshot.value;
-//       isOrder_Db = fullData['isOrder'];
-//     });
-//   });
-// });
+                  .listen(
+                (Event event) {
+                  var fullData = event.snapshot.value;
+                  isOrderDb = fullData['isOrder'];
+                },
+              );
+            },
+          ),
+        );
