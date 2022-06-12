@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_firebase/Screens/Cart/cart_screen.dart';
-import '../Dashboard/main_dashboard.dart';
 
+// ignore: non_constant_identifier_names
 var access_token = "";
 var emailUser = "";
 var nimUser = "";
@@ -15,6 +16,7 @@ class LoginPageState extends StatefulWidget {
   const LoginPageState({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -46,8 +48,8 @@ class _LoginPageState extends State<LoginPageState> {
                       width: size.width * 0.5,
                       child: Positioned(
                         top: 70,
-                        child: Image.asset("assets/images/logolabitnoback.png"),
                         width: size.width * 0.5,
+                        child: Image.asset("assets/images/logolabitnoback.png"),
                       ),
                     ),
                   ],
@@ -60,6 +62,10 @@ class _LoginPageState extends State<LoginPageState> {
                     padding: const EdgeInsets.only(left: 20),
                     margin: const EdgeInsets.only(
                         top: 20, bottom: 20, right: 40, left: 40),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                     child: TextFormField(
                       style: const TextStyle(
                           fontFamily: "Poppins",
@@ -81,15 +87,15 @@ class _LoginPageState extends State<LoginPageState> {
                         border: InputBorder.none,
                       ),
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.only(left: 20),
                     margin: const EdgeInsets.only(
                         top: 0, bottom: 0, right: 40, left: 40),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                     child: TextFormField(
                       controller: passController,
                       obscureText: true,
@@ -116,10 +122,6 @@ class _LoginPageState extends State<LoginPageState> {
                           size: 24.0,
                         ),
                       ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(25),
                     ),
                   ),
                   Container(
@@ -184,15 +186,17 @@ class _LoginPageState extends State<LoginPageState> {
       );
 
       if (response.statusCode == 200) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => CartScreen()));
+        // ignore: use_build_context_synchronously
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const CartScreen()));
       } else {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("NIM atau Password anda salah!")));
+            const SnackBar(content: Text("NIM atau Password anda salah!")));
       }
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("data tidak boleh kosong!")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("data tidak boleh kosong!")));
     }
   }
 
@@ -211,7 +215,7 @@ class _LoginPageState extends State<LoginPageState> {
         accessData();
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("NIM atau Password anda salah!")));
+            const SnackBar(content: Text("NIM atau Password anda salah!")));
       }
     });
   }
@@ -239,7 +243,9 @@ class _LoginPageState extends State<LoginPageState> {
 
         login();
       } catch (e) {
-        print("error");
+        if (kDebugMode) {
+          print("error");
+        }
       }
     });
   }

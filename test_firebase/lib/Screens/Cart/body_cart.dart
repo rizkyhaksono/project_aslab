@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_firebase/Screens/Cart/Cart.dart';
 
 class BodyCart extends StatefulWidget {
   const BodyCart({Key? key}) : super(key: key);
@@ -32,7 +31,7 @@ class _BodyCartState extends State<BodyCart> {
                 const EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 20),
             margin: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
-              color: Color(0xFFC4C4C4),
+              color: const Color(0xFFC4C4C4),
               borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
@@ -52,9 +51,9 @@ class _BodyCartState extends State<BodyCart> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text(
+                      const Text(
                         "Jas Informatika Lab",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -76,19 +75,19 @@ class _BodyCartState extends State<BodyCart> {
                               onPressed: () {
                                 setState(() {});
                               },
+                              mini: true,
                               child: const Icon(
                                 Icons.remove,
                                 size: 20,
                               ),
-                              mini: true,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                               // belum ke fetch database
                               "Size : M",
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 14.0,
                                   fontFamily: "Poppins",
                                   color: Colors.black,
@@ -107,11 +106,11 @@ class _BodyCartState extends State<BodyCart> {
                                   // error
                                 });
                               },
+                              mini: true,
                               child: const Icon(
                                 Icons.add,
                                 size: 20,
                               ),
-                              mini: true,
                             ),
                           ),
                         ],

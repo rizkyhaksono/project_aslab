@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class LoginButton extends StatefulWidget {
-  LoginButton({Key? key}) : super(key: key);
+  const LoginButton({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginButtonState createState() => _LoginButtonState();
 }
 

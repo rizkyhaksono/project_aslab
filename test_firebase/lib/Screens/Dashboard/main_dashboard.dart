@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:test_firebase/Screens/Login/login_page_state.dart';
 
-var message_logout = "";
+var messageLogout = "";
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _MainDashboardState extends State<MainDashboard> {
           Text("Welcome User $fullNameUser"),
           Text("NIM : $nimUser"),
           Text("Email : $emailUser"),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           OutlinedButton.icon(
@@ -37,11 +38,11 @@ class _MainDashboardState extends State<MainDashboard> {
               // Navigator.pushReplacement(context,
               //     MaterialPageRoute(builder: (context) => LoginPageState()));
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.exit_to_app,
               size: 18,
             ),
-            label: Text("Logout"),
+            label: const Text("Logout"),
           )
         ],
       ),
@@ -57,14 +58,18 @@ class _MainDashboardState extends State<MainDashboard> {
       try {
         var jsonResponse = json.decode(access.body)['message'];
         // return to global variable
-        message_logout = jsonResponse;
+        messageLogout = jsonResponse;
         // debugging
-        print("Message     : $message_logout");
+        if (kDebugMode) {
+          print("Message     : $messageLogout");
+        }
         // return to login page
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPageState()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const LoginPageState()));
       } catch (e) {
-        print("error");
+        if (kDebugMode) {
+          print("error");
+        }
       }
     });
   }

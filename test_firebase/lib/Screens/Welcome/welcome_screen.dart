@@ -13,7 +13,7 @@ class WelcomeScreen extends StatelessWidget {
         const Duration(seconds: 3),
         (() => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
               builder: (BuildContext context) {
-                return LoginPage(); // diganti
+                return const LoginPage(); // diganti
               },
             ), (route) => false)));
     return const Scaffold(

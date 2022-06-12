@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:test_firebase/Screens/Cart/Cart.dart';
 import 'package:test_firebase/Screens/Cart/body_cart.dart';
 import 'package:test_firebase/Screens/Database/data_test.dart';
 import 'package:test_firebase/Screens/Login/login_page_state.dart';
@@ -43,7 +41,7 @@ class CartScreen extends StatelessWidget {
                 heroTag: "btn_checkout",
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return DataTest();
+                    return const MyDatabase();
                   }));
                 },
                 label: const Text(
@@ -88,9 +86,9 @@ class CartScreen extends StatelessWidget {
       backgroundColor: backgroundcolor,
       centerTitle: true,
       title: Column(
-        children: [
+        children: const [
           // title
-          const Text(
+          Text(
             "Shopping Cart",
             style: TextStyle(
               color: Colors.white,
@@ -102,7 +100,7 @@ class CartScreen extends StatelessWidget {
           Text(
             // dummy datas from Cart.dart
             "1 items",
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
               fontFamily: "Poppins",
               fontSize: 14,

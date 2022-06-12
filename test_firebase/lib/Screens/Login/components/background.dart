@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 
 class BackgroundLogin extends StatelessWidget {
@@ -24,8 +22,8 @@ class BackgroundLogin extends StatelessWidget {
             width: size.width * 0.5,
             child: Positioned(
               top: 70,
-              child: Image.asset("assets/images/logolabitnoback.png"),
               width: size.width * 0.5,
+              child: Image.asset("assets/images/logolabitnoback.png"),
             ),
           ),
           Positioned(
