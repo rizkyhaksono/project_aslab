@@ -1,12 +1,15 @@
-import 'dart:async';
+import 'dart:isolate';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:test_firebase/Screens/BuktiTransfer/bukti_body.dart';
+import 'package:test_firebase/Screens/BuktiTransfer/bukti_screen.dart';
 import 'package:test_firebase/Screens/Database/storage_service.dart';
+import 'package:test_firebase/constants.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 var isOrderDb;
@@ -14,6 +17,8 @@ var isOrderDb;
 var ukuranDb;
 // ignore: prefer_typing_uninitialized_variables
 var jumlahDb;
+// ignore: prefer_typing_uninitialized_variables
+var filePath;
 
 class MyDatabase extends StatefulWidget {
   const MyDatabase({Key? key}) : super(key: key);
@@ -26,7 +31,7 @@ class _MyDatabase extends State<MyDatabase> {
   @override
   Widget build(BuildContext context) {
     final Storage storage = Storage();
-    final dbRef = FirebaseDatabase.instance.reference().child('JasAslab');
+    final dbRef = FirebaseDatabase.instance.reference();
 
     return Scaffold(
       appBar: AppBar(
@@ -126,23 +131,30 @@ class _MyDatabase extends State<MyDatabase> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const MyDatabase()));
-                await dbRef.once().then((DataSnapshot snapshot) {
-                  snapshot.value.forEach((key, value) {
-                    dbRef.child("JasAslab").onChildAdded.listen((Event event) {
-                      var fullData = event.snapshot.value;
-                      isOrderDb = fullData['isOrder'];
-                      ukuranDb = fullData['Ukuran'];
-                      jumlahDb = fullData['Jumlah'];
-                      if (kDebugMode) {
-                        print(fullData);
-                      }
-                    }, onError: (Object error) {
-                      if (kDebugMode) {
-                        print(error);
-                      }
+
+                try {
+                  await dbRef.once().then((DataSnapshot snapshot) {
+                    // masih mencari else untuk data null nya
+                    snapshot.value.map((key, value) {
+                      dbRef.child("JasAslab").onChildAdded.listen(
+                          (Event event) {
+                        var fullData = event.snapshot.value;
+                        isOrderDb = fullData['isOrder'];
+                        ukuranDb = fullData['Ukuran'];
+                        jumlahDb = fullData['Jumlah'];
+                        if (kDebugMode) {
+                          print(fullData);
+                        }
+                      }, onError: (Object error) {
+                        if (kDebugMode) {
+                          print(error);
+                        }
+                      });
                     });
                   });
-                });
+                } on Exception catch (e) {
+                  print("Error : $e");
+                }
                 if (kDebugMode) {
                   print("Read called");
                 }
@@ -175,52 +187,87 @@ class _MyDatabase extends State<MyDatabase> {
             Text("Jumlah : $jumlahDb"),
             // upload images
             ElevatedButton(
-                onPressed: (() async {
-                  final result = await FilePicker.platform.pickFiles(
-                    allowMultiple: false,
-                    type: FileType.custom,
-                    allowedExtensions: ['png', 'jpg'],
-                  );
+              onPressed: (() async {
+                final result = await FilePicker.platform.pickFiles(
+                  allowMultiple: false,
+                  type: FileType.custom,
+                  allowedExtensions: ['png', 'jpg'],
+                );
 
-                  if (result == null) {
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('No file selected'),
+                if (result == null) {
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('No file selected'),
+                    ),
+                  );
+                  return null;
+                }
+
+                final path = result.files.single.path!;
+                final fileName = result.files.single.name;
+
+                filePath = fileName;
+
+                storage
+                    .uploadFile(path, fileName)
+                    .then((value) => print("Done"));
+              }),
+              child: const Text('Upload Image'),
+            ),
+            FutureBuilder(
+                future: storage.listFiles(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<firebase_storage.ListResult> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      height: 50,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.items.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                primary: backgroundcolor,
+                              ),
+                              child: Text(
+                                  "Image path : ${snapshot.data!.items[index].name}"),
+                            ),
+                          );
+                        },
                       ),
                     );
-                    return null;
                   }
-
-                  final path = result.files.single.path!;
-                  final fileName = result.files.single.name;
-
-                  storage
-                      .uploadFile(path, fileName)
-                      .then((value) => print("Done"));
+                  if (snapshot.connectionState == ConnectionState.waiting ||
+                      !snapshot.hasData) {
+                    return const CircularProgressIndicator();
+                  }
+                  return Container();
                 }),
-                child: const Text("Upload File")),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const BuktiTF()));
+              },
+              child: const Text("See the images"),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BuktiBody()));
+                },
+                child: const Text("Upload Bukti TF")),
           ],
         ),
       ),
     );
   }
 }
-
-Future<void> orderAja() =>
-    FirebaseDatabase.instance.reference().child('JasAslab').once().then(
-          (DataSnapshot snapshot) => snapshot.value.forEach(
-            (value) {
-              FirebaseDatabase.instance
-                  .reference()
-                  .child("data_user")
-                  .onChildAdded
-                  .listen(
-                (Event event) {
-                  var fullData = event.snapshot.value;
-                  isOrderDb = fullData['isOrder'];
-                },
-              );
-            },
-          ),
-        );
