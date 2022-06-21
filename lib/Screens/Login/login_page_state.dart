@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -21,13 +23,14 @@ class _LoginPageState extends State<LoginPageState> {
   // nim, pass temporary data
   var nimController = TextEditingController();
   var passController = TextEditingController();
+  bool liatPasssword = true;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 100,
         ),
         child: SingleChildScrollView(
@@ -39,15 +42,10 @@ class _LoginPageState extends State<LoginPageState> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 0),
-                      margin: const EdgeInsets.symmetric(vertical: 5),
+                    Positioned(
+                      top: 0,
+                      child: Image.asset("assets/images/logolabitnoback.png"),
                       width: size.width * 0.5,
-                      child: Positioned(
-                        top: 70,
-                        child: Image.asset("assets/images/logolabitnoback.png"),
-                        width: size.width * 0.5,
-                      ),
                     ),
                   ],
                 ),
@@ -56,16 +54,16 @@ class _LoginPageState extends State<LoginPageState> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 20),
-                    margin: EdgeInsets.only(
+                    padding: const EdgeInsets.only(left: 20),
+                    margin: const EdgeInsets.only(
                         top: 20, bottom: 20, right: 40, left: 40),
                     child: TextFormField(
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 12,
                           color: Colors.black),
                       controller: nimController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "NIM",
                         labelStyle: TextStyle(
                           fontFamily: "Poppins",
@@ -86,35 +84,43 @@ class _LoginPageState extends State<LoginPageState> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 20),
-                    margin:
-                        EdgeInsets.only(top: 0, bottom: 0, right: 40, left: 40),
+                    width: size.width,
+                    height: size.height / 14,
+                    padding: const EdgeInsets.only(left: 20),
+                    margin: const EdgeInsets.only(
+                        top: 0, bottom: 0, right: 40, left: 40),
                     child: TextFormField(
+                      key: const ValueKey('Password'),
                       controller: passController,
-                      obscureText: true,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 12,
                           color: Colors.black),
                       decoration: InputDecoration(
-                        labelText: "Password",
-                        labelStyle: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                        icon: Icon(
-                          Icons.lock,
-                          color: Colors.grey,
-                          size: 24,
-                        ),
-                        border: InputBorder.none,
-                        suffixIcon: Icon(
-                          Icons.visibility,
-                          color: Colors.grey,
-                          size: 24.0,
-                        ),
-                      ),
+                          labelText: "Password",
+                          labelStyle: const TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                          icon: const Icon(
+                            Icons.lock,
+                            color: Colors.grey,
+                            size: 24,
+                          ),
+                          border: InputBorder.none,
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  liatPasssword = !liatPasssword;
+                                });
+                              },
+                              child: liatPasssword
+                                  ? const Icon(Icons.visibility,
+                                      color: Colors.grey)
+                                  : const Icon(Icons.visibility_off,
+                                      color: Colors.grey))),
+                      obscureText: liatPasssword,
                     ),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -122,22 +128,23 @@ class _LoginPageState extends State<LoginPageState> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
                       onPressed: () {
-                        login();
+                        accessToken();
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 255, 102, 0),
+                        primary: const Color.fromARGB(255, 255, 102, 0),
                         minimumSize: const Size(100, 38),
                         alignment: Alignment.center,
                         animationDuration: const Duration(milliseconds: 200),
                         elevation: 5,
                         shape: const StadiumBorder(),
                       ),
+                      // ignore: prefer_const_constructors
                       child: Text(
                         "Login",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.bold,
@@ -181,24 +188,23 @@ class _LoginPageState extends State<LoginPageState> {
         }),
       );
 
-      accessToken();
-      accessData();
-
       if (response.statusCode == 200) {
         // direct to main page
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MainDashboard()));
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+          return const MainDashboard();
+        }), (route) => false);
         // print the data
         print("Response Status: ${response.statusCode}");
         // print(nimController.text);
         // print(passController.text);
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Invalid Credentials")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("NIM atau Password salah!")));
       }
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Blank Field is Not Allowed!")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("NIM dan Password harus di isi!")));
     }
   }
 
@@ -215,8 +221,10 @@ class _LoginPageState extends State<LoginPageState> {
 
         access_token = jsonResponse;
         print("Acces Token : $access_token");
+        accessData();
       } catch (e) {
-        print("error");
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("NIM atau Password anda salah!")));
       }
     });
   }
@@ -241,6 +249,7 @@ class _LoginPageState extends State<LoginPageState> {
         nimUser = jsonResponse;
         emailUser = jsonResponse2;
         fullNameUser = jsonResponse3;
+        login();
 
         // debugging
         print("Email     : $emailUser");

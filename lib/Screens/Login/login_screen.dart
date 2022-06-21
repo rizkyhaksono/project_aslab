@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'components/body.dart';
 import 'login_page_state.dart';
 
 class LoginPage extends StatelessWidget {
@@ -7,7 +6,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: LoginPageState(),
     );
   }

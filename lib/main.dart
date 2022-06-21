@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Auth',
+      title: 'I-Lab',
       theme: ThemeData(
         primaryColor: backgroundcolor,
         //Warna Background aplikasi
