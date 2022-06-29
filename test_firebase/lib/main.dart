@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:test_firebase/Screens/Anjay/buktiTF_body.dart';
 import 'package:test_firebase/constants.dart';
 import 'Screens/Welcome/welcome_screen.dart';
 
@@ -26,7 +28,8 @@ class MyApp extends StatelessWidget {
         //Warna Background aplikasi
         scaffoldBackgroundColor: backgroundcolor,
       ),
-      home: const WelcomeScreen(),
+      // home: const WelcomeScreen(),
+      home: const UploadImageScreen(),
     );
   }
 }

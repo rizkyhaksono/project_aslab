@@ -1,13 +1,17 @@
-import 'dart:ui';
+import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:test_firebase/Screens/BuktiTransfer/bukti_screen.dart';
+import 'package:test_firebase/Screens/Database/data_test.dart';
 import 'package:test_firebase/Screens/Database/storage_service.dart';
 import 'package:test_firebase/constants.dart';
 
 var filePathBukti;
+var nameImage;
+var totalImage;
 
 class BuktiBody extends StatefulWidget {
   const BuktiBody({Key? key}) : super(key: key);
@@ -20,6 +24,8 @@ class _BuktiBodyState extends State<BuktiBody> {
   final Storage storage = Storage();
   @override
   Widget build(BuildContext context) {
+    final Storage storage = Storage();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundcolor,
@@ -75,11 +81,8 @@ class _BuktiBodyState extends State<BuktiBody> {
                   type: FileType.custom,
                   allowedExtensions: ['png', 'jpg'],
                 );
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Data sudah tersimpan!')));
 
                 if (result == null) {
-                  // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('No file selected'),
@@ -95,7 +98,12 @@ class _BuktiBodyState extends State<BuktiBody> {
 
                 storage
                     .uploadFile(path, fileName)
-                    .then((value) => print("Done"));
+                    .then((value) => print("Sudah terupload"));
+
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyDatabase()));
               }),
             ),
           ),
@@ -104,45 +112,71 @@ class _BuktiBodyState extends State<BuktiBody> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: kPrimaryDarkColor,
-                  ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const BuktiBody()));
-                    // check if filePath is null
-                    if (filePathBukti == null) {
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Tolong upload file terlebih dahulu!'),
-                        ),
-                      );
-                      return null;
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BuktiTF(),
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text("See image"),
-                ),
+                // debug test
+                FutureBuilder(
+                    future: storage.listFiles(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<firebase_storage.ListResult> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done &&
+                          snapshot.hasData) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                          height: 50,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: (snapshot.data!.items.length > 1)
+                                ? snapshot.data!.items.length - 1
+                                : snapshot.data!.items.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              // wrap data from firebase to local
+                              nameImage = snapshot.data!.items[index].name;
+                              totalImage = snapshot.data!.items.length;
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BuktiTF()));
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: backgroundcolor,
+                                  ),
+                                  child: const Text("See Image"),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting ||
+                          !snapshot.hasData) {
+                        return const CircularProgressIndicator();
+                      }
+
+                      return Container();
+                    }),
+                // delete button
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red,
                   ),
                   onPressed: () async {
-                    await firebase_storage.FirebaseStorage.instance
-                        .ref('BuktiTransfer/$filePathBukti')
-                        .delete();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Data sudah terhapus!')));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MyDatabase()));
+
+                    var refImage = firebase_storage.FirebaseStorage.instance;
+
+                    await refImage
+                        .ref('BuktiTransfer/$nameImage')
+                        .delete()
+                        .then((value) => print('deleted successfully'));
                   },
                   child: const Text("Delete Image"),
                 ),
@@ -152,7 +186,7 @@ class _BuktiBodyState extends State<BuktiBody> {
           // delete image
           SizedBox(
             width: double.infinity,
-            height: 308,
+            height: 306,
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[

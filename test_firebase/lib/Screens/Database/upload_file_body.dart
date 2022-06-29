@@ -1,15 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:test_firebase/Screens/BuktiTransfer/bukti_body.dart';
-import 'package:test_firebase/Screens/BuktiTransfer/bukti_screen.dart';
 import 'package:test_firebase/Screens/Database/storage_service.dart';
 import 'package:test_firebase/constants.dart';
 
@@ -48,6 +39,7 @@ class uploadFileBody extends StatelessWidget {
             ),
           );
         }
+
         if (snapshot.connectionState == ConnectionState.waiting ||
             !snapshot.hasData) {
           return const CircularProgressIndicator();

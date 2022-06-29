@@ -1,7 +1,4 @@
-import 'dart:isolate';
-
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +76,7 @@ class _MyDatabase extends State<MyDatabase> {
                     });
                   });
 
-                  tableRef.push();
+                  // tableRef.push();
                   if (kDebugMode) {
                     print("Push called");
                   }
@@ -118,7 +115,7 @@ class _MyDatabase extends State<MyDatabase> {
                     });
                   });
 
-                  tableRef.push();
+                  // tableRef.push();
                   if (kDebugMode) {
                     print("Update called");
                   }
@@ -132,29 +129,21 @@ class _MyDatabase extends State<MyDatabase> {
                     MaterialPageRoute(
                         builder: (context) => const MyDatabase()));
 
-                try {
-                  await dbRef.once().then((DataSnapshot snapshot) {
-                    // masih mencari else untuk data null nya
-                    snapshot.value.map((key, value) {
-                      dbRef.child("JasAslab").onChildAdded.listen(
-                          (Event event) {
-                        var fullData = event.snapshot.value;
-                        isOrderDb = fullData['isOrder'];
-                        ukuranDb = fullData['Ukuran'];
-                        jumlahDb = fullData['Jumlah'];
-                        if (kDebugMode) {
-                          print(fullData);
-                        }
-                      }, onError: (Object error) {
-                        if (kDebugMode) {
-                          print(error);
-                        }
-                      });
+                await dbRef.once().then((DataSnapshot snapshot) {
+                  // masih mencari else untuk data null nya
+                  snapshot.value.forEach((key, value) {
+                    dbRef.child("JasAslab").onChildAdded.listen((Event event) {
+                      var fullData = event.snapshot.value;
+                      isOrderDb = fullData['isOrder'];
+                      ukuranDb = fullData['Ukuran'];
+                      jumlahDb = fullData['Jumlah'];
+                      if (kDebugMode) {
+                        print(fullData);
+                      }
                     });
                   });
-                } on Exception catch (e) {
-                  print("Error : $e");
-                }
+                });
+
                 if (kDebugMode) {
                   print("Read called");
                 }
@@ -175,9 +164,6 @@ class _MyDatabase extends State<MyDatabase> {
 
                 var tableRef = dbRef.child("JasAslab");
                 await tableRef.child("data_user").remove();
-                if (kDebugMode) {
-                  print("Remove called");
-                }
               },
               child: const Text("Delete Data"),
             ),
@@ -185,6 +171,7 @@ class _MyDatabase extends State<MyDatabase> {
             Text("Order  : $isOrderDb"),
             Text("Ukuran : $ukuranDb"),
             Text("Jumlah : $jumlahDb"),
+
             // upload images
             ElevatedButton(
               onPressed: (() async {
@@ -201,7 +188,7 @@ class _MyDatabase extends State<MyDatabase> {
                       content: Text('No file selected'),
                     ),
                   );
-                  return null;
+                  return;
                 }
 
                 final path = result.files.single.path!;
@@ -211,7 +198,10 @@ class _MyDatabase extends State<MyDatabase> {
 
                 storage
                     .uploadFile(path, fileName)
-                    .then((value) => print("Done"));
+                    .then((value) => print("Done Uploading Image"));
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Data sudah tersimpan!')));
               }),
               child: const Text('Upload Image'),
             ),

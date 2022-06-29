@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class Storage {
@@ -31,9 +32,11 @@ class Storage {
     firebase_storage.ListResult result =
         await storage.ref('BuktiTransfer/').listAll();
 
-    result.items.forEach((firebase_storage.Reference ref) {
-      print('Found file: $ref');
-    });
+    for (var ref in result.items) {
+      if (kDebugMode) {
+        print('Found file: $ref');
+      }
+    }
 
     return result;
   }
@@ -42,6 +45,7 @@ class Storage {
   Future<String> downloadURL(String imageName) async {
     String downloadURL =
         await storage.ref('BuktiTransfer/$imageName').getDownloadURL();
+
     return downloadURL;
   }
 }
