@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:i_lab/Screens/Dashboard/main_dashboard.dart';
 import 'package:i_lab/Screens/Login/login_page_state.dart';
+import 'package:i_lab/Screens/paymentMethod/payment.dart';
 import 'package:i_lab/constants.dart';
 
 class CartPage extends StatefulWidget {
@@ -12,15 +13,17 @@ class CartPage extends StatefulWidget {
   State<CartPage> createState() => _CartPageState();
 }
 
+List<String> items = ['S', 'M', 'XL', 'XXL'];
+String? selectedItem = 'S';
+String? UserItem = selectedItem;
+String HargaJaket = "150.000";
+
 class _CartPageState extends State<CartPage> {
   double getHeight(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final EdgeInsets padding = MediaQuery.of(context).padding;
     return height - padding.bottom;
   }
-
-  List<String> items = ['S', 'M', 'XL', 'XXL'];
-  String? selectedItem = 'S';
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class _CartPageState extends State<CartPage> {
             appBar: AppBar(
               toolbarHeight: 76,
               leading: Container(
-                margin: const EdgeInsets.only(bottom: 9),
+                margin: const EdgeInsets.only(bottom: 9, left: 10),
                 height: 66,
                 alignment: Alignment.centerLeft,
                 child: IconButton(
@@ -51,10 +54,10 @@ class _CartPageState extends State<CartPage> {
                 height: 66,
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Payment",
+                  "Cart",
                   style: TextStyle(
                       fontFamily: "Montserrat",
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
@@ -87,7 +90,7 @@ class _CartPageState extends State<CartPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          height: 225,
+                          height: getHeight(context) / 5,
                           width: size.width,
                           color: const Color(0xFFC4C4C4),
                           child: CarouselSlider(
@@ -101,7 +104,8 @@ class _CartPageState extends State<CartPage> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(top: 10, left: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
                           height: 22,
                           width: 138,
                           child: const Text(
@@ -113,7 +117,8 @@ class _CartPageState extends State<CartPage> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(top: 10, left: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
                           height: 22,
                           width: 138,
                           child: const Text(
@@ -126,7 +131,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                         Center(
                             child: Container(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           alignment: Alignment.centerLeft,
                           height: 41,
                           width: size.width - 41,
@@ -136,7 +141,8 @@ class _CartPageState extends State<CartPage> {
                           child: Text(fullNameUser),
                         )),
                         Container(
-                          margin: const EdgeInsets.only(top: 20, left: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
                           height: 22,
                           width: 138,
                           child: const Text(
@@ -149,7 +155,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                         Center(
                           child: Container(
-                            padding: const EdgeInsets.only(left: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             alignment: Alignment.centerLeft,
                             height: 41,
                             width: size.width - 41,
@@ -160,7 +166,8 @@ class _CartPageState extends State<CartPage> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(top: 20, left: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
                           height: 22,
                           width: 138,
                           child: const Text(
@@ -196,11 +203,110 @@ class _CartPageState extends State<CartPage> {
                             ),
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              height: 17,
+                              width: size.width / 7,
+                              child: const Text(
+                                "Total",
+                                style: TextStyle(
+                                    fontFamily: "Montserrat",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              height: 17,
+                              width: size.width / 5,
+                              child: const Text(
+                                "Rp.150.000",
+                                style: TextStyle(
+                                    fontFamily: "Monstesserat",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 20),
+                              height: getHeight(context) / 25,
+                              width: size.width / 3,
+                              child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    elevation: 0,
+                                    primary: Colors.transparent,
+                                    splashFactory: NoSplash.splashFactory,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainDashboard()));
+                                  },
+                                  child: const Text(
+                                    "Cancel Order",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "Montserrat",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  )),
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(right: 20),
+                                height: getHeight(context) / 25,
+                                width: size.width / 3,
+                                child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        foregroundColor: MaterialStateProperty.all(
+                                            Colors.white),
+                                        backgroundColor:
+                                            MaterialStateProperty.resolveWith((states) =>
+                                                states.any((element) => element == MaterialState.pressed)
+                                                    ? const Color(0xFFDF610C)
+                                                    : const Color(0xFFFF6600)),
+                                        animationDuration:
+                                            const Duration(milliseconds: 200),
+                                        minimumSize: MaterialStateProperty.all(
+                                            const Size(206, 43)),
+                                        shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)))),
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Payment()));
+                                    },
+                                    child: const Text(
+                                      "Check Out",
+                                      style: TextStyle(
+                                          fontFamily: "Montserrat",
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 14),
+                                    )))
+                          ],
+                        )
                       ],
                     ),
                     Positioned(
                         bottom: 0,
-                        child: SvgPicture.asset("assets/svg/wavebottomsvg.svg"))
+                        child:
+                            SvgPicture.asset("assets/svg/wavebottomsvg.svg")),
                   ],
                 ))),
       ),

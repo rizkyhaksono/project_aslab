@@ -3,6 +3,7 @@
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:i_lab/constants.dart';
 
 import '../Database/storage_service.dart';
@@ -151,15 +152,16 @@ class _BuktiBodyState extends State<BuktiBody> {
             ),
           ),
           // delete image
-          SizedBox(
+          Container(
+            margin: const EdgeInsets.only(top: 7),
             width: double.infinity,
             height: 308,
             child: Stack(
-              alignment: Alignment.center,
+              alignment: Alignment.bottomCenter,
               children: <Widget>[
                 Positioned(
                   bottom: 0,
-                  child: Image.asset("assets/images/wavedashboard-1.png"),
+                  child: SvgPicture.asset("assets/svg/wavebottomsvg.svg"),
                 ),
               ],
             ),

@@ -140,7 +140,7 @@ class _bodydashboardState extends State<bodydashboard> {
                                     width: 180,
                                     height: 190,
                                     child: const Text(
-                                      "Febric : Premium cotton \n\t\t\t\t\t\t\t\t\t\t\t\tcombed \nColor   :  Gray \nFeels   : Soft & Comfortable \nSize      : S, M, L, XL \nWidth x Length x Chest \nS   (38cm x 58cm x 95cm) \nM  (41cm x 63cm x 100cm) \nL    (50cm x 69cm x 105cm)  \nXL (53cm x 71cm x 110cm)",
+                                      "Febric : Premium cotton\n                combed \nColor   :  Gray \nFeels   : Soft & Comfortable \nSize      : S, M, L, XL \nWidth x Length x Chest \nS   (38cm x 58cm x 95cm) \nM  (41cm x 63cm x 100cm) \nL    (50cm x 69cm x 105cm)  \nXL (53cm x 71cm x 110cm)",
                                       style: TextStyle(
                                           fontFamily: "Poppins",
                                           fontSize: 12,

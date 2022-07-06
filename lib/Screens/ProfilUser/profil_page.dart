@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'dart:convert';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:i_lab/Screens/Login/login_page_state.dart';
 import 'package:i_lab/constants.dart';
@@ -9,6 +9,7 @@ import '../Dashboard/main_dashboard.dart';
 import 'package:http/http.dart' as http;
 
 var message_logout = "";
+final Uri url = Uri.parse('https://infotech.umm.ac.id/');
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({Key? key}) : super(key: key);
@@ -186,19 +187,23 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                 ),
                 Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(top: 0, left: 20),
-                  height: 25,
-                  width: size.width - 160,
-                  child: const Text(
-                    "Costumer Service",
-                    style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "Poppins",
-                        fontSize: 14),
-                  ),
-                )
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(top: 0, left: 20),
+                    height: size.height / 25,
+                    width: size.width - 160,
+                    child: TextButton(
+                      onPressed: () {
+                        launchURL;
+                      },
+                      child: const Text(
+                        "Costumer Service",
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Poppins",
+                            fontSize: 14),
+                      ),
+                    ))
               ],
             ),
           ),
@@ -220,6 +225,10 @@ class _ProfilPageState extends State<ProfilPage> {
         ],
       ),
     );
+  }
+
+  void launchURL() async {
+    if (!await launchUrl(url)) throw 'Request Time Out';
   }
 
   Future<void> logout() async {
