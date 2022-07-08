@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_firebase/Screens/Login/components/background.dart';
-
 import '../login_page_state.dart';
+import 'Background.dart';
 
 class BodyLogin extends StatelessWidget {
   const BodyLogin({

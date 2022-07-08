@@ -1,8 +1,8 @@
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
-import 'package:test_firebase/Screens/BuktiTransfer/bukti_body.dart';
 import 'package:test_firebase/Screens/Database/storage_service.dart';
-import 'package:test_firebase/constants.dart';
+
+import '../../constants.dart';
 
 class uploadFileBody extends StatelessWidget {
   uploadFileBody({Key? key}) : super(key: key);
@@ -39,7 +39,6 @@ class uploadFileBody extends StatelessWidget {
             ),
           );
         }
-
         if (snapshot.connectionState == ConnectionState.waiting ||
             !snapshot.hasData) {
           return const CircularProgressIndicator();

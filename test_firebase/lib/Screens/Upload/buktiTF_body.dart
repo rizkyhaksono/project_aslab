@@ -1,13 +1,10 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:test_firebase/constants.dart';
 
 class UploadImageScreen extends StatefulWidget {
   const UploadImageScreen({Key? key}) : super(key: key);

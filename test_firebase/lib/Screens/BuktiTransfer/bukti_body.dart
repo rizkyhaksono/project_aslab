@@ -192,7 +192,7 @@ class _BuktiBodyState extends State<BuktiBody> {
               children: <Widget>[
                 Positioned(
                   bottom: 0,
-                  child: Image.asset("assets/images/wavedashboard-1.png"),
+                  child: Image.asset("assets/images/wavedashboard.png"),
                 ),
               ],
             ),

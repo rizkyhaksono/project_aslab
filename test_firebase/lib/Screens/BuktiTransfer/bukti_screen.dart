@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-// import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:test_firebase/Screens/BuktiTransfer/bukti_body.dart';
 import 'package:test_firebase/Screens/Database/storage_service.dart';
 import 'package:test_firebase/constants.dart';
+
+import 'bukti_body.dart';
 
 class BuktiTF extends StatelessWidget {
   const BuktiTF({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class BuktiTF extends StatelessWidget {
       backgroundColor: Colors.white,
       body: FutureBuilder(
         // file path dari bukti_body
-        future: storage.downloadURL('$nameImage'),
+        future: storage.downloadURL('$filePathBukti'),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
@@ -40,14 +40,10 @@ class BuktiTF extends StatelessWidget {
               ),
             );
           }
-
           if (snapshot.connectionState == ConnectionState.waiting ||
               !snapshot.hasData) {
-            return const CircularProgressIndicator(
-              color: backgroundcolor,
-            );
+            return const CircularProgressIndicator();
           }
-
           return Container();
         },
       ),
