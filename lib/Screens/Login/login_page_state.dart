@@ -1,15 +1,11 @@
-import 'dart:async';
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
 import 'dart:convert';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:i_lab/Screens/Cart/cart_screen.dart';
 import '../Dashboard/main_dashboard.dart';
-
-var access_token = "";
-var emailUser = "";
-var nimUser = "";
-var fullNameUser = "";
 
 class LoginPageState extends StatefulWidget {
   const LoginPageState({Key? key}) : super(key: key);
@@ -18,10 +14,22 @@ class LoginPageState extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+// global key for form validation
+var access_token = "";
+var emailUser = "";
+var nimUser = "";
+var fullNameUser = "";
+
+// global key for database references
+var isOrderDB;
+var ukuranDB;
+var jumlahDB;
+
 class _LoginPageState extends State<LoginPageState> {
   // nim, pass temporary data
   var nimController = TextEditingController();
   var passController = TextEditingController();
+  bool liatPasssword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,26 +48,25 @@ class _LoginPageState extends State<LoginPageState> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 0),
-                      margin: const EdgeInsets.symmetric(vertical: 5),
+                    Positioned(
+                      top: 0,
                       width: size.width * 0.5,
-                      child: Positioned(
-                        top: 70,
-                        child: Image.asset("assets/images/logolabitnoback.png"),
-                        width: size.width * 0.5,
-                      ),
+                      child: Image.asset("assets/images/logolabitnoback.png"),
                     ),
                   ],
                 ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
+                children: [
                   Container(
                     padding: const EdgeInsets.only(left: 20),
                     margin: const EdgeInsets.only(
                         top: 20, bottom: 20, right: 40, left: 40),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                     child: TextFormField(
                       style: const TextStyle(
                           fontFamily: "Poppins",
@@ -81,52 +88,55 @@ class _LoginPageState extends State<LoginPageState> {
                         border: InputBorder.none,
                       ),
                     ),
+                  ),
+                  Container(
+                    width: size.width,
+                    height: size.height / 14,
+                    padding: const EdgeInsets.only(left: 20),
+                    margin: const EdgeInsets.only(
+                        top: 0, bottom: 0, right: 40, left: 40),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(25),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 20),
-                    margin: const EdgeInsets.only(
-                        top: 0, bottom: 0, right: 40, left: 40),
                     child: TextFormField(
+                      key: const ValueKey('Password'),
                       controller: passController,
-                      obscureText: true,
                       style: const TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 12,
                           color: Colors.black),
-                      decoration: const InputDecoration(
-                        labelText: "Password",
-                        labelStyle: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                        icon: Icon(
-                          Icons.lock,
-                          color: Colors.grey,
-                          size: 24,
-                        ),
-                        border: InputBorder.none,
-                        suffixIcon: Icon(
-                          Icons.visibility,
-                          color: Colors.grey,
-                          size: 24.0,
-                        ),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(25),
+                      decoration: InputDecoration(
+                          labelText: "Password",
+                          labelStyle: const TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                          icon: const Icon(
+                            Icons.lock,
+                            color: Colors.grey,
+                            size: 24,
+                          ),
+                          border: InputBorder.none,
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  liatPasssword = !liatPasssword;
+                                });
+                              },
+                              child: liatPasssword
+                                  ? const Icon(Icons.visibility,
+                                      color: Colors.grey)
+                                  : const Icon(Icons.visibility_off,
+                                      color: Colors.grey))),
+                      obscureText: liatPasssword,
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
                       onPressed: () {
-                        // login();
                         accessToken();
                       },
                       style: ElevatedButton.styleFrom(
@@ -137,9 +147,10 @@ class _LoginPageState extends State<LoginPageState> {
                         elevation: 5,
                         shape: const StadiumBorder(),
                       ),
-                      child: const Text(
+                      // ignore: prefer_const_constructors
+                      child: Text(
                         "Login",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.bold,
@@ -153,7 +164,7 @@ class _LoginPageState extends State<LoginPageState> {
                     height: 260,
                     child: Stack(
                       alignment: Alignment.center,
-                      children: <Widget>[
+                      children: [
                         Positioned(
                             bottom: 0,
                             child: Image.asset(
@@ -185,23 +196,23 @@ class _LoginPageState extends State<LoginPageState> {
 
       if (response.statusCode == 200) {
         // direct to main page
-        // Timer(Duration(seconds: 1), (() {
-        //   Navigator.push(context,
-        //       MaterialPageRoute(builder: (context) => MainDashboard()));
-        // }));
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => CartScreen()));
+        // ignore: use_build_context_synchronously
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+          return const MainDashboard();
+        }), (route) => false);
         // print the data
-        // print("Response Status: ${response.statusCode}");
+        print("Response Status: ${response.statusCode}");
         // print(nimController.text);
         // print(passController.text);
       } else {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("NIM atau Password anda salah!")));
+            const SnackBar(content: Text("NIM atau Password salah!")));
       }
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("data tidak boleh kosong!")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("NIM dan Password harus di isi!")));
     }
   }
 
@@ -217,11 +228,11 @@ class _LoginPageState extends State<LoginPageState> {
         var jsonResponse = json.decode(response.body)['access_token'];
 
         access_token = jsonResponse;
-        // print("Acces Token : $access_token");
+        print("Acces Token : $access_token");
         accessData();
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("NIM atau Password anda salah!")));
+            const SnackBar(content: Text("NIM atau Password anda salah!")));
       }
     });
   }
@@ -246,16 +257,35 @@ class _LoginPageState extends State<LoginPageState> {
         nimUser = jsonResponse;
         emailUser = jsonResponse2;
         fullNameUser = jsonResponse3;
-
         login();
 
         // debugging
-        // print("Email     : $emailUser");
-        // print("NIM       : $nimUser");
-        // print("Full Name : $fullNameUser");
+        print("Email     : $emailUser");
+        print("NIM       : $nimUser");
+        print("Full Name : $fullNameUser");
+
+        var ref = FirebaseDatabase.instance.reference().child('JasAslab');
+
+        ref.once().then((DataSnapshot snapshot) {
+          isOrderDB = snapshot.value['isOrder'];
+          ukuranDB = snapshot.value['ukuran'];
+          jumlahDB = snapshot.value['jumlah'];
+          print("Order : $isOrderDB");
+          print("Ukuran : $ukuranDB");
+          print("Jumlah : $jumlahDB");
+        });
       } catch (e) {
         print("error");
       }
     });
+  }
+
+  // logout api
+  Future<void> logout() async {
+    await http.post(
+        Uri.parse("https://api.infotech.umm.ac.id/dotlab/api/v1/auth/logout"),
+        headers: {
+          "Authorization": "Bearer $access_token",
+        });
   }
 }
