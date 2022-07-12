@@ -42,6 +42,11 @@ class _CautionState extends State<Caution> {
           ),
         ),
       ),
+      child: SafeArea(
+          top: true,
+          child: Scaffold(
+            appBar: AppBar(),
+          )),
     );
   }
 }

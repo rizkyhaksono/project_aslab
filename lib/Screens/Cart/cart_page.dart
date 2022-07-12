@@ -30,7 +30,6 @@ class _CartPageState extends State<CartPage> {
   // initializing the database
   final Storage storage = Storage();
   final databaseRef = FirebaseDatabase.instance.reference();
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPageState> {
                       top: 0,
                       width: size.width * 0.5,
                       child: Image.asset("assets/images/logolabitnoback.png"),
+                      
                     ),
                   ],
                 ),
@@ -131,6 +132,10 @@ class _LoginPageState extends State<LoginPageState> {
                                   : const Icon(Icons.visibility_off,
                                       color: Colors.grey))),
                       obscureText: liatPasssword,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
                     ),
                   ),
                   Container(

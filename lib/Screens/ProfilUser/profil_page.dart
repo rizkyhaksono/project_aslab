@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'dart:convert';
+
 import 'package:i_lab/Screens/Login/login_page_state.dart';
 import 'package:i_lab/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -184,6 +185,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     Icons.phone,
                     size: 30,
                     color: kPrimaryColor,
+                    color: kPrimaryDarkColor,
                   ),
                 ),
                 Container(

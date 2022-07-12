@@ -362,6 +362,139 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
               ),
             ),
           ),
+=======
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: const Text("Upload Bukti"),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            loading
+                ? const Center(child: CircularProgressIndicator())
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton.icon(
+                          onPressed: () {
+                            uploadImage("camera");
+                          },
+                          icon: const Icon(Icons.camera),
+                          label: const Text("Camera")),
+                      ElevatedButton.icon(
+                          onPressed: () {
+                            uploadImage("gallery");
+                          },
+                          icon: const Icon(Icons.library_add),
+                          label: const Text("Gallery")),
+                    ],
+                  ),
+            const SizedBox(height: 20),
+            const SizedBox(
+              height: 50,
+              child: Text(
+                "Preview Image",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
+            Expanded(
+                child: FutureBuilder(
+                    future: loadImages(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      return ListView.builder(
+                          itemCount: snapshot.data.length ?? 0,
+                          itemBuilder: (context, index) {
+                            final Map image = snapshot.data[index];
+                            return Row(
+                              children: [
+                                Expanded(
+                                    child: Card(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: SizedBox(
+                                    height: 180,
+                                    // width: 300,
+                                    child: CachedNetworkImage(
+                                      imageUrl: image['url'],
+                                      placeholder: (context, url) => Image.asset(
+                                          'assets/images/placeholder-image.png'),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    ),
+                                  ),
+                                )),
+                                TextButton(
+                                  onPressed: () async {
+                                    showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              title: const Text(
+                                                  "Ingin menghapus gambar ini?"),
+                                              content: const Text(
+                                                  "Aksi ini tidak bisa dibatalkan!"),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                    onPressed: () async {
+                                                      await delete(
+                                                          image['path']);
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                              const SnackBar(
+                                                                  content: Text(
+                                                                      "Gambar sudah terhapus!")));
+                                                      Navigator.of(context,
+                                                              rootNavigator:
+                                                                  true)
+                                                          .pop();
+                                                    },
+                                                    child: const Text("Ya")),
+                                                TextButton(
+                                                    onPressed: () async {
+                                                      Navigator.of(context,
+                                                              rootNavigator:
+                                                                  true)
+                                                          .pop();
+                                                    },
+                                                    child: const Text("Tidak"))
+                                              ],
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                bottomLeft: Radius.circular(20),
+                                                bottomRight:
+                                                    Radius.circular(20),
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20),
+                                              )),
+                                            ));
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                )
+                              ],
+                            );
+                          });
+                    })),
+          ],
         ),
       ),
     );
