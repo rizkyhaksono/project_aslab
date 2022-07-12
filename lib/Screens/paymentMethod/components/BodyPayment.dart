@@ -85,6 +85,12 @@ class BodyPayment extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => const BcaPayment()));
                         },
+                        style: OutlinedButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            splashFactory: NoSplash.splashFactory,
+                            primary: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -106,12 +112,6 @@ class BodyPayment extends StatelessWidget {
                             )
                           ],
                         ),
-                        style: OutlinedButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            splashFactory: NoSplash.splashFactory,
-                            primary: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15))),
                       ),
                     ),
                   ),
@@ -124,6 +124,12 @@ class BodyPayment extends StatelessWidget {
                       width: size.width - 41,
                       child: OutlinedButton(
                         onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            splashFactory: NoSplash.splashFactory,
+                            primary: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -146,12 +152,6 @@ class BodyPayment extends StatelessWidget {
                             )
                           ],
                         ),
-                        style: OutlinedButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            splashFactory: NoSplash.splashFactory,
-                            primary: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15))),
                       ),
                     ),
                   ),
@@ -162,6 +162,12 @@ class BodyPayment extends StatelessWidget {
                       width: size.width - 41,
                       child: OutlinedButton(
                         onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            splashFactory: NoSplash.splashFactory,
+                            primary: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -183,12 +189,6 @@ class BodyPayment extends StatelessWidget {
                             )
                           ],
                         ),
-                        style: OutlinedButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            splashFactory: NoSplash.splashFactory,
-                            primary: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15))),
                       ),
                     ),
                   ),
@@ -199,6 +199,12 @@ class BodyPayment extends StatelessWidget {
                       width: size.width - 41,
                       child: OutlinedButton(
                         onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            splashFactory: NoSplash.splashFactory,
+                            primary: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -220,12 +226,6 @@ class BodyPayment extends StatelessWidget {
                             )
                           ],
                         ),
-                        style: OutlinedButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            splashFactory: NoSplash.splashFactory,
-                            primary: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15))),
                       ),
                     ),
                   )

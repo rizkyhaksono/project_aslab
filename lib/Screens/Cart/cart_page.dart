@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:i_lab/Screens/Dashboard/main_dashboard.dart';
+import 'package:i_lab/Screens/Database/storage_service.dart';
 import 'package:i_lab/Screens/Login/login_page_state.dart';
 import 'package:i_lab/Screens/paymentMethod/payment.dart';
 import 'package:i_lab/constants.dart';
@@ -14,7 +16,7 @@ class CartPage extends StatefulWidget {
 }
 
 List<String> items = ['S', 'M', 'XL', 'XXL'];
-String? selectedItem = 'S';
+String? selectedItem;
 String? UserItem = selectedItem;
 String HargaJaket = "150.000";
 
@@ -25,6 +27,9 @@ class _CartPageState extends State<CartPage> {
     return height - padding.bottom;
   }
 
+  // initializing the database
+  final Storage storage = Storage();
+  final databaseRef = FirebaseDatabase.instance.reference();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -253,6 +258,12 @@ class _CartPageState extends State<CartPage> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 const MainDashboard()));
+
+                                    databaseRef.child("JasAslab").set({
+                                      'isOrder': false,
+                                      'ukuran': null,
+                                      'jumlah': null,
+                                    });
                                   },
                                   child: const Text(
                                     "Cancel Order",
@@ -291,6 +302,14 @@ class _CartPageState extends State<CartPage> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   const Payment()));
+
+                                      databaseRef.child("JasAslab").set({
+                                        'isOrder': true,
+                                        'ukuran': selectedItem,
+                                        'jumlah': 1,
+                                      });
+
+                                      print("Anda memilih : $selectedItem");
                                     },
                                     child: const Text(
                                       "Check Out",

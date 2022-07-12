@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../Dashboard/main_dashboard.dart';
@@ -18,6 +19,11 @@ var access_token = "";
 var emailUser = "";
 var nimUser = "";
 var fullNameUser = "";
+
+// global key for database references
+var isOrderDB;
+var ukuranDB;
+var jumlahDB;
 
 class _LoginPageState extends State<LoginPageState> {
   // nim, pass temporary data
@@ -44,8 +50,9 @@ class _LoginPageState extends State<LoginPageState> {
                   children: <Widget>[
                     Positioned(
                       top: 0,
-                      child: Image.asset("assets/images/logolabitnoback.png"),
                       width: size.width * 0.5,
+                      child: Image.asset("assets/images/logolabitnoback.png"),
+                      
                     ),
                   ],
                 ),
@@ -57,6 +64,10 @@ class _LoginPageState extends State<LoginPageState> {
                     padding: const EdgeInsets.only(left: 20),
                     margin: const EdgeInsets.only(
                         top: 20, bottom: 20, right: 40, left: 40),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                     child: TextFormField(
                       style: const TextStyle(
                           fontFamily: "Poppins",
@@ -78,10 +89,6 @@ class _LoginPageState extends State<LoginPageState> {
                         border: InputBorder.none,
                       ),
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
                   ),
                   Container(
                     width: size.width,
@@ -89,6 +96,10 @@ class _LoginPageState extends State<LoginPageState> {
                     padding: const EdgeInsets.only(left: 20),
                     margin: const EdgeInsets.only(
                         top: 0, bottom: 0, right: 40, left: 40),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                     child: TextFormField(
                       key: const ValueKey('Password'),
                       controller: passController,
@@ -190,6 +201,7 @@ class _LoginPageState extends State<LoginPageState> {
 
       if (response.statusCode == 200) {
         // direct to main page
+        // ignore: use_build_context_synchronously
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (BuildContext context) {
           return const MainDashboard();
@@ -199,6 +211,7 @@ class _LoginPageState extends State<LoginPageState> {
         // print(nimController.text);
         // print(passController.text);
       } else {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("NIM atau Password salah!")));
       }
@@ -255,6 +268,17 @@ class _LoginPageState extends State<LoginPageState> {
         print("Email     : $emailUser");
         print("NIM       : $nimUser");
         print("Full Name : $fullNameUser");
+
+        var ref = FirebaseDatabase.instance.reference().child('JasAslab');
+
+        ref.once().then((DataSnapshot snapshot) {
+          isOrderDB = snapshot.value['isOrder'];
+          ukuranDB = snapshot.value['ukuran'];
+          jumlahDB = snapshot.value['jumlah'];
+          print("Order : $isOrderDB");
+          print("Ukuran : $ukuranDB");
+          print("Jumlah : $jumlahDB");
+        });
       } catch (e) {
         print("error");
       }

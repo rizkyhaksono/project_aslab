@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:i_lab/constants.dart';
-import 'Screens/Welcome/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
+import 'package:i_lab/Screens/Welcome/welcome_screen.dart';
+import 'package:i_lab/constants.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'I-Lab',
+      title: 'Flutter Auth',
       theme: ThemeData(
         primaryColor: backgroundcolor,
         //Warna Background aplikasi

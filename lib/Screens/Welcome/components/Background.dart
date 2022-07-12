@@ -34,8 +34,8 @@ class Background extends StatelessWidget {
             bottom: 0, child: Image.asset("assets/images/iconwavebottom.png")),
         Positioned(
           top: 235,
-          child: Image.asset("assets/images/logolabitnoback.png"),
           width: size.width * 0.6,
+          child: Image.asset("assets/images/logolabitnoback.png"),
         ),
         Positioned(top: 0, child: Image.asset("assets/images/wavetop.png")),
         child,

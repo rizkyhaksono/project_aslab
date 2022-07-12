@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:i_lab/Screens/Cart/cart_page.dart';
 import 'package:i_lab/Screens/Login/login_page_state.dart';
 import 'package:i_lab/Screens/ProfilUser/profil_page.dart';
+import 'package:i_lab/Screens/caution/caution.dart';
 import 'package:i_lab/constants.dart';
 
 class bodydashboard extends StatefulWidget {
@@ -191,7 +192,10 @@ class _bodydashboardState extends State<bodydashboard> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const CartPage()));
+                                    builder: (context) => (isOrderDB == true &&
+                                            selectedItem != null)
+                                        ? const Caution()
+                                        : const CartPage()));
                           },
                           icon: const Icon(Icons.add_shopping_cart_outlined),
                           label: const Text(

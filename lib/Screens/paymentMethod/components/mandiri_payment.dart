@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:i_lab/Screens/BuktiTransfer/buktiTF_body.dart';
-import 'package:i_lab/Screens/BuktiTransfer/bukti_body.dart';
 import 'package:i_lab/Screens/Cart/cart_page.dart';
 import 'package:i_lab/constants.dart';
 
@@ -166,7 +165,7 @@ class _MandiriPaymentState extends State<MandiriPayment> {
                       backgroundColor: MaterialStateColor.resolveWith(
                           (states) => states.any(
                                   (element) => element == MaterialState.pressed)
-                              ? kPrimaryDarkColor
+                              ? kPrimaryColor
                               : kPrimaryColor),
                       minimumSize:
                           MaterialStateProperty.all(const Size(206, 43)),
