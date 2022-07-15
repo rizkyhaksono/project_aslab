@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_firebase/Screens/Upload/buktiTF_body.dart';
+import 'package:test_firebase/Screens/BuktiTransfer/buktiTF_body.dart';
 import 'package:test_firebase/Screens/Cart/cart_page.dart';
 import 'package:test_firebase/constants.dart';
 
@@ -41,7 +41,7 @@ class _MandiriPaymentState extends State<MandiriPayment> {
             height: 66,
             alignment: Alignment.centerLeft,
             child: const Text(
-              "Bank Central Asia",
+              "Bank Mandiri",
               style: TextStyle(
                   fontFamily: "Montserrat",
                   fontSize: 18,
@@ -86,7 +86,7 @@ class _MandiriPaymentState extends State<MandiriPayment> {
                     SizedBox(
                       height: size.height / 13,
                       width: size.width / 6,
-                      child: Image.asset("assets/images/bca_icon.png"),
+                      child: Image.asset("assets/images/mandiri_icon.png"),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 20),
@@ -98,7 +98,7 @@ class _MandiriPaymentState extends State<MandiriPayment> {
                             bottom: BorderSide(color: Color(0xFFC4C4C4))),
                       ),
                       child: Text(
-                        "No. Rekening Tujuan \nBCA - $rekeningTujuan",
+                        "No. Rekening Tujuan \nMandiri - $rekeningTujuan",
                         style: const TextStyle(
                             fontFamily: "Montserrat",
                             fontSize: 14,

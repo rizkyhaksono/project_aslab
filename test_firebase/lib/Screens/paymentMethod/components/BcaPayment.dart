@@ -1,7 +1,7 @@
 // ignore: file_names
 
 import 'package:flutter/material.dart';
-import 'package:test_firebase/Screens/Upload/buktiTF_body.dart';
+import 'package:test_firebase/Screens/BuktiTransfer/buktiTF_body.dart';
 import 'package:test_firebase/Screens/Cart/cart_page.dart';
 import 'package:test_firebase/Screens/paymentMethod/payment.dart';
 import 'package:test_firebase/constants.dart';
@@ -152,15 +152,8 @@ class _BcaPaymentState extends State<BcaPayment> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => UploadImageScreen()));
+                            builder: (context) => const UploadImageScreen()));
                   },
-                  child: const Text(
-                    "Konfirmasi",
-                    style: TextStyle(
-                        fontFamily: "Montserrat",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
                   style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
                       backgroundColor: MaterialStateColor.resolveWith(
@@ -171,7 +164,14 @@ class _BcaPaymentState extends State<BcaPayment> {
                       minimumSize:
                           MaterialStateProperty.all(const Size(206, 43)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))))),
+                          borderRadius: BorderRadius.circular(10)))),
+                  child: const Text(
+                    "Konfirmasi",
+                    style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                  )),
             )
           ]),
         ),

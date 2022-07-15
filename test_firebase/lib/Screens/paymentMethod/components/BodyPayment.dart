@@ -1,15 +1,21 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:test_firebase/Screens/Cart/cart_page.dart';
 import 'package:test_firebase/Screens/paymentMethod/components/BcaPayment.dart';
+import 'package:test_firebase/Screens/paymentMethod/components/bni_payment.dart';
+import 'package:test_firebase/Screens/paymentMethod/components/bri_payment.dart';
+import 'package:test_firebase/Screens/paymentMethod/components/mandiri_payment.dart';
 import 'package:test_firebase/constants.dart';
 
 class BodyPayment extends StatelessWidget {
-  const BodyPayment({
+  BodyPayment({
     Key? key,
     required this.size,
   }) : super(key: key);
 
   final Size size;
+
+  final databaseRef = FirebaseDatabase.instance.reference();
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +33,15 @@ class BodyPayment extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back_ios),
                   onPressed: () {
+                    // hapus database jika kembali dari halaman ini
+
+                    databaseRef.child("JasAslab").update({
+                      'BCA': null,
+                      'BNI': null,
+                      'BRI': null,
+                      'Mandiri': null,
+                    });
+
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -80,6 +95,13 @@ class BodyPayment extends StatelessWidget {
                       width: size.width - 41,
                       child: OutlinedButton(
                         onPressed: () {
+                          databaseRef.child("JasAslab").update({
+                            'BCA': true,
+                            'BNI': null,
+                            'BRI': null,
+                            'Mandiri': null,
+                          });
+
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -123,7 +145,20 @@ class BodyPayment extends StatelessWidget {
                       height: size.height / 13,
                       width: size.width - 41,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          databaseRef.child("JasAslab").update({
+                            'BCA': null,
+                            'BNI': null,
+                            'BRI': null,
+                            'Mandiri': true,
+                          });
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MandiriPayment()));
+                        },
                         style: OutlinedButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             splashFactory: NoSplash.splashFactory,
@@ -161,7 +196,19 @@ class BodyPayment extends StatelessWidget {
                       height: size.height / 13,
                       width: size.width - 41,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          databaseRef.child("JasAslab").update({
+                            'BCA': null,
+                            'BNI': true,
+                            'BRI': null,
+                            'Mandiri': null,
+                          });
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const BniPayment()));
+                        },
                         style: OutlinedButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             splashFactory: NoSplash.splashFactory,
@@ -198,7 +245,19 @@ class BodyPayment extends StatelessWidget {
                       height: size.height / 13,
                       width: size.width - 41,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          databaseRef.child("JasAslab").update({
+                            'BCA': null,
+                            'BNI': null,
+                            'BRI': true,
+                            'Mandiri': null,
+                          });
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const BriPayment()));
+                        },
                         style: OutlinedButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             splashFactory: NoSplash.splashFactory,

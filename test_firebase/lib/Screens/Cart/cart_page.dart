@@ -20,13 +20,6 @@ String? selectedItem;
 String? UserItem = selectedItem;
 String HargaJaket = "150.000";
 
-// ignore: prefer_typing_uninitialized_variables
-var isOrderDatabase;
-// ignore: prefer_typing_uninitialized_variables
-var ukuranDatabase;
-// ignore: prefer_typing_uninitialized_variables
-var jumlahDatabase;
-
 class _CartPageState extends State<CartPage> {
   double getHeight(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -304,59 +297,20 @@ class _CartPageState extends State<CartPage> {
                                             RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10)))),
-                                    onPressed: () async {
-                                      await databaseRef
-                                          .child("JasAslab")
-                                          .once()
-                                          .then((DataSnapshot snapshot) => {
-                                                snapshot.value
-                                                    .forEach((key, value) {
-                                                  databaseRef
-                                                      .child("JasAslab")
-                                                      .onChildAdded
-                                                      .listen((event) {
-                                                    var fullData =
-                                                        event.snapshot.value;
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Payment()));
 
-                                                    isOrderDatabase =
-                                                        fullData['isOrder'];
-                                                    ukuranDatabase =
-                                                        fullData['ukuran'];
-                                                    jumlahDatabase =
-                                                        fullData['jumlah'];
-                                                  });
-                                                })
-                                              });
+                                      databaseRef.child("JasAslab").set({
+                                        'isOrder': true,
+                                        'ukuran': selectedItem,
+                                        'jumlah': 1,
+                                      });
 
-                                      if (ukuranDatabase == null) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                'Anda harus memilih ukuran jas!'),
-                                          ),
-                                        );
-
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const CartPage()));
-                                      }
-
-                                      if (ukuranDatabase != null) {
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const Payment()));
-
-                                        databaseRef.child("JasAslab").set({
-                                          'isOrder': true,
-                                          'ukuran': selectedItem,
-                                          'jumlah': 1,
-                                        });
-                                      }
+                                      print("Anda memilih : $selectedItem");
                                     },
                                     child: const Text(
                                       "Check Out",

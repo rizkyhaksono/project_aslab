@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:test_firebase/Screens/BuktiTransfer/buktiTF_body.dart';
 import 'package:test_firebase/Screens/Cart/cart_page.dart';
 import 'package:test_firebase/constants.dart';
 
-import '../../BuktiTransfer/bukti_body.dart';
 import '../payment.dart';
 
 class BriPayment extends StatefulWidget {
@@ -41,7 +41,7 @@ class _BriPaymentState extends State<BriPayment> {
             height: 66,
             alignment: Alignment.centerLeft,
             child: const Text(
-              "Bank Central Asia",
+              "Bank Rakyat Indonesia",
               style: TextStyle(
                   fontFamily: "Montserrat",
                   fontSize: 18,
@@ -86,7 +86,7 @@ class _BriPaymentState extends State<BriPayment> {
                     SizedBox(
                       height: size.height / 13,
                       width: size.width / 6,
-                      child: Image.asset("assets/images/bca_icon.png"),
+                      child: Image.asset("assets/images/bri_icon.png"),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 20),
@@ -98,7 +98,7 @@ class _BriPaymentState extends State<BriPayment> {
                             bottom: BorderSide(color: Color(0xFFC4C4C4))),
                       ),
                       child: Text(
-                        "No. Rekening Tujuan \nBCA - $rekeningTujuan",
+                        "No. Rekening Tujuan \nBRI - $rekeningTujuan",
                         style: const TextStyle(
                             fontFamily: "Montserrat",
                             fontSize: 14,
@@ -151,15 +151,8 @@ class _BriPaymentState extends State<BriPayment> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const BuktiBody()));
+                            builder: (context) => const UploadImageScreen()));
                   },
-                  child: const Text(
-                    "Konfirmasi",
-                    style: TextStyle(
-                        fontFamily: "Montserrat",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
                   style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
                       backgroundColor: MaterialStateColor.resolveWith(
@@ -170,7 +163,14 @@ class _BriPaymentState extends State<BriPayment> {
                       minimumSize:
                           MaterialStateProperty.all(const Size(206, 43)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))))),
+                          borderRadius: BorderRadius.circular(10)))),
+                  child: const Text(
+                    "Konfirmasi",
+                    style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                  )),
             )
           ]),
         ),

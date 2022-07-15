@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_firebase/Screens/BuktiTransfer/bukti_body.dart';
+import 'package:test_firebase/Screens/BuktiTransfer/buktiTF_body.dart';
 import 'package:test_firebase/Screens/Cart/cart_page.dart';
 import 'package:test_firebase/Screens/paymentMethod/payment.dart';
 import 'package:test_firebase/constants.dart';
@@ -40,7 +40,7 @@ class _BniPaymentState extends State<BniPayment> {
             height: 66,
             alignment: Alignment.centerLeft,
             child: const Text(
-              "Bank Central Asia",
+              "Bank Negara Indonesia",
               style: TextStyle(
                   fontFamily: "Montserrat",
                   fontSize: 18,
@@ -85,7 +85,7 @@ class _BniPaymentState extends State<BniPayment> {
                     SizedBox(
                       height: size.height / 13,
                       width: size.width / 6,
-                      child: Image.asset("assets/images/bca_icon.png"),
+                      child: Image.asset("assets/images/bni_icon.png"),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 20),
@@ -97,7 +97,7 @@ class _BniPaymentState extends State<BniPayment> {
                             bottom: BorderSide(color: Color(0xFFC4C4C4))),
                       ),
                       child: Text(
-                        "No. Rekening Tujuan \nBCA - $rekeningTujuan",
+                        "No. Rekening Tujuan \nBNI - $rekeningTujuan",
                         style: const TextStyle(
                             fontFamily: "Montserrat",
                             fontSize: 14,
@@ -150,15 +150,8 @@ class _BniPaymentState extends State<BniPayment> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const BuktiBody()));
+                            builder: (context) => const UploadImageScreen()));
                   },
-                  child: const Text(
-                    "Konfirmasi",
-                    style: TextStyle(
-                        fontFamily: "Montserrat",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
                   style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
                       backgroundColor: MaterialStateColor.resolveWith(
@@ -169,7 +162,14 @@ class _BniPaymentState extends State<BniPayment> {
                       minimumSize:
                           MaterialStateProperty.all(const Size(206, 43)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))))),
+                          borderRadius: BorderRadius.circular(10)))),
+                  child: const Text(
+                    "Konfirmasi",
+                    style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                  )),
             )
           ]),
         ),
