@@ -24,6 +24,7 @@ var fullNameUser = "";
 var isOrderDB;
 var ukuranDB;
 var jumlahDB;
+var bankDB;
 
 class _LoginPageState extends State<LoginPageState> {
   // nim, pass temporary data

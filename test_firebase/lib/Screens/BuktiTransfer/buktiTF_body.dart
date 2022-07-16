@@ -329,9 +329,11 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                             isOrderDB = snapshot.value['isOrder'];
                             ukuranDB = snapshot.value['ukuran'];
                             jumlahDB = snapshot.value['jumlah'];
+                            bankDB = snapshot.value['isBank'];
                             print("Order : $isOrderDB");
                             print("Ukuran : $ukuranDB");
                             print("Jumlah : $jumlahDB");
+                            print("Bank : $bankDB");
                           });
 
                           Navigator.pushReplacement(

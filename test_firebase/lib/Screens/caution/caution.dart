@@ -208,9 +208,9 @@ class _CautionState extends State<Caution> {
                                               height: size.height / 37,
                                               width: size.width / 5,
                                               color: Colors.white,
-                                              child: const Text(
-                                                "BCA",
-                                                style: TextStyle(
+                                              child: Text(
+                                                "$bankDB",
+                                                style: const TextStyle(
                                                     fontFamily: "Poppins",
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 16),

@@ -35,12 +35,7 @@ class BodyPayment extends StatelessWidget {
                   onPressed: () {
                     // hapus database jika kembali dari halaman ini
 
-                    databaseRef.child("JasAslab").update({
-                      'BCA': null,
-                      'BNI': null,
-                      'BRI': null,
-                      'Mandiri': null,
-                    });
+                    databaseRef.child("JasAslab").update({'isBank': false});
 
                     Navigator.pushReplacement(
                         context,
@@ -96,10 +91,7 @@ class BodyPayment extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: () {
                           databaseRef.child("JasAslab").update({
-                            'BCA': true,
-                            'BNI': null,
-                            'BRI': null,
-                            'Mandiri': null,
+                            'isBank': "BCA",
                           });
 
                           Navigator.pushReplacement(
@@ -147,10 +139,7 @@ class BodyPayment extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: () {
                           databaseRef.child("JasAslab").update({
-                            'BCA': null,
-                            'BNI': null,
-                            'BRI': null,
-                            'Mandiri': true,
+                            'isBank': "Mandiri",
                           });
 
                           Navigator.push(
@@ -198,10 +187,7 @@ class BodyPayment extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: () {
                           databaseRef.child("JasAslab").update({
-                            'BCA': null,
-                            'BNI': true,
-                            'BRI': null,
-                            'Mandiri': null,
+                            'isBank': "BNI",
                           });
 
                           Navigator.push(
@@ -247,10 +233,7 @@ class BodyPayment extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: () {
                           databaseRef.child("JasAslab").update({
-                            'BCA': null,
-                            'BNI': null,
-                            'BRI': true,
-                            'Mandiri': null,
+                            'isBank': "BRI",
                           });
 
                           Navigator.push(
