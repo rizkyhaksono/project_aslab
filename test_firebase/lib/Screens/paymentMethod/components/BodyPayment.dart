@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:test_firebase/Screens/Cart/cart_page.dart';
+import 'package:test_firebase/Screens/Login/login_page_state.dart';
 import 'package:test_firebase/Screens/paymentMethod/components/BcaPayment.dart';
 import 'package:test_firebase/Screens/paymentMethod/components/bni_payment.dart';
 import 'package:test_firebase/Screens/paymentMethod/components/bri_payment.dart';
@@ -90,7 +91,10 @@ class BodyPayment extends StatelessWidget {
                       width: size.width - 41,
                       child: OutlinedButton(
                         onPressed: () {
-                          databaseRef.child("JasAslab").update({
+                          databaseRef.child("JasAslab").set({
+                            'isOrder': false,
+                            'ukuran': false,
+                            'jumlah': 1,
                             'isBank': "BCA",
                           });
 
@@ -138,7 +142,10 @@ class BodyPayment extends StatelessWidget {
                       width: size.width - 41,
                       child: OutlinedButton(
                         onPressed: () {
-                          databaseRef.child("JasAslab").update({
+                          databaseRef.child("JasAslab").set({
+                            'isOrder': false,
+                            'ukuran': false,
+                            'jumlah': 1,
                             'isBank': "Mandiri",
                           });
 
@@ -186,7 +193,10 @@ class BodyPayment extends StatelessWidget {
                       width: size.width - 41,
                       child: OutlinedButton(
                         onPressed: () {
-                          databaseRef.child("JasAslab").update({
+                          databaseRef.child("JasAslab").set({
+                            'isOrder': false,
+                            'ukuran': false,
+                            'jumlah': 1,
                             'isBank': "BNI",
                           });
 
@@ -232,7 +242,10 @@ class BodyPayment extends StatelessWidget {
                       width: size.width - 41,
                       child: OutlinedButton(
                         onPressed: () {
-                          databaseRef.child("JasAslab").update({
+                          databaseRef.child("JasAslab").set({
+                            'isOrder': false,
+                            'ukuran': false,
+                            'jumlah': 1,
                             'isBank': "BRI",
                           });
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:test_firebase/Screens/BuktiTransfer/buktiTF_body.dart';
 import 'package:test_firebase/Screens/Cart/cart_page.dart';
 import 'package:test_firebase/Screens/Dashboard/main_dashboard.dart';
 import 'package:test_firebase/Screens/Login/login_page_state.dart';
@@ -233,12 +234,24 @@ class _CautionState extends State<Caution> {
                                         )
                                       ],
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             )
                           ],
                         ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      height: size.height / 20,
+                      width: size.width - 80,
+                      child: Text(
+                        tanggalDB,
+                        style: const TextStyle(
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFFC4C4C4)),
                       ),
                     )
                   ],

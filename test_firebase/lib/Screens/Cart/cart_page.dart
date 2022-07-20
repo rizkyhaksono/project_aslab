@@ -17,7 +17,6 @@ class CartPage extends StatefulWidget {
 
 List<String> items = ['S', 'M', 'XL', 'XXL'];
 String? selectedItem;
-String? UserItem = selectedItem;
 String HargaJaket = "150.000";
 
 class _CartPageState extends State<CartPage> {
@@ -52,6 +51,11 @@ class _CartPageState extends State<CartPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const MainDashboard()));
+                    databaseRef.child("JasAslab").set({
+                      'isOrder': false,
+                      'ukuran': null,
+                      'jumlah': null,
+                    });
                   },
                 ),
               ),
@@ -203,8 +207,9 @@ class _CartPageState extends State<CartPage> {
                                             style:
                                                 const TextStyle(fontSize: 14))))
                                     .toList(),
-                                onChanged: (item) =>
-                                    setState(() => selectedItem = item),
+                                onChanged: (item) => setState(
+                                  () => selectedItem = item,
+                                ),
                               ),
                             ),
                           ),
@@ -230,9 +235,9 @@ class _CartPageState extends State<CartPage> {
                                   const EdgeInsets.symmetric(horizontal: 20),
                               height: 17,
                               width: size.width / 5,
-                              child: const Text(
-                                "Rp.150.000",
-                                style: TextStyle(
+                              child: Text(
+                                "Rp.$HargaJaket",
+                                style: const TextStyle(
                                     fontFamily: "Monstesserat",
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
@@ -303,12 +308,6 @@ class _CartPageState extends State<CartPage> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   const Payment()));
-
-                                      databaseRef.child("JasAslab").set({
-                                        'isOrder': true,
-                                        'ukuran': selectedItem,
-                                        'jumlah': 1,
-                                      });
 
                                       print("Anda memilih : $selectedItem");
                                     },

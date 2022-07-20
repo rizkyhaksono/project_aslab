@@ -2,6 +2,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_firebase/Screens/Cart/cart_page.dart';
 import 'package:test_firebase/Screens/Login/login_page_state.dart';
 import 'package:test_firebase/Screens/ProfilUser/profil_page.dart';
@@ -183,17 +184,17 @@ class _bodydashboardState extends State<bodydashboard> {
                   children: <Widget>[
                     Positioned(
                         bottom: 0,
-                        child: Image.asset("assets/images/wavedashboard.png")),
+                        child:
+                            SvgPicture.asset("assets/svg/wavebottomsvg.svg")),
                     Positioned(
                         bottom: 50,
-                        left: 25,
+                        right: 20,
                         child: ElevatedButton.icon(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => (isOrderDB == true &&
-                                            selectedItem != null)
+                                    builder: (context) => (isOrderDB == true)
                                         ? const Caution()
                                         : const CartPage()));
                           },
@@ -216,7 +217,7 @@ class _bodydashboardState extends State<bodydashboard> {
                               animationDuration:
                                   const Duration(milliseconds: 200),
                               minimumSize: MaterialStateProperty.all(
-                                  const Size(206, 43)),
+                                  Size(size.width / 3 + 8, size.height / 21)),
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)))),

@@ -9,7 +9,14 @@ import '../Dashboard/main_dashboard.dart';
 import 'package:http/http.dart' as http;
 
 var message_logout = "";
-final Uri url = Uri.parse('https://infotech.umm.ac.id/');
+
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Request time out';
+  }
+}
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({Key? key}) : super(key: key);
@@ -192,11 +199,15 @@ class _ProfilPageState extends State<ProfilPage> {
                     height: size.height / 25,
                     width: size.width - 160,
                     child: TextButton(
+                      style: TextButton.styleFrom(
+                          splashFactory: NoSplash.splashFactory),
                       onPressed: () {
-                        launchURL;
+                        const url =
+                            'https://instagram.com/labit.umm?igshid=YmMyMTA2M2Y=';
+                        launchURL(url);
                       },
                       child: const Text(
-                        "Costumer Service",
+                        "About Us",
                         style: TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.w500,
@@ -225,10 +236,6 @@ class _ProfilPageState extends State<ProfilPage> {
         ],
       ),
     );
-  }
-
-  void launchURL() async {
-    if (!await launchUrl(url)) throw 'Request Time Out';
   }
 
   Future<void> logout() async {
