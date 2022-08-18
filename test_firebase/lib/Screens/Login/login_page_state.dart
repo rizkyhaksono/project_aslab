@@ -186,9 +186,7 @@ class _LoginPageState extends State<LoginPageState> {
   Future<void> login() async {
     if (passController.text.isNotEmpty && nimController.text.isNotEmpty) {
       var response = await http.post(
-        Uri.parse(
-            // infotech api
-            "https://api.infotech.umm.ac.id/dotlab/api/v1/auth/student"),
+        Uri.parse("your api"),
         body: ({
           'username': nimController.text,
           'password': passController.text,
@@ -219,12 +217,10 @@ class _LoginPageState extends State<LoginPageState> {
 
   // fetch token to generate access_token
   Future<void> accessToken() async {
-    http.post(
-        Uri.parse("https://api.infotech.umm.ac.id/dotlab/api/v1/auth/student"),
-        body: {
-          "username": nimController.text,
-          "password": passController.text,
-        }).then((response) {
+    http.post(Uri.parse("your api"), body: {
+      "username": nimController.text,
+      "password": passController.text,
+    }).then((response) {
       try {
         var jsonResponse = json.decode(response.body)['access_token'];
 
@@ -240,15 +236,13 @@ class _LoginPageState extends State<LoginPageState> {
 
   // fetch data user from api
   Future<void> accessData() async {
-    http.post(Uri.parse("https://api.infotech.umm.ac.id/dotlab/api/v1/auth/me"),
-        body: {
-          "user_name": nimUser,
-          "email": emailUser,
-          "full_name": fullNameUser,
-        },
-        headers: {
-          "Authorization": "Bearer $access_token",
-        }).then((response) {
+    http.post(Uri.parse("your api"), body: {
+      "user_name": nimUser,
+      "email": emailUser,
+      "full_name": fullNameUser,
+    }, headers: {
+      "Authorization": "Bearer $access_token",
+    }).then((response) {
       try {
         var jsonResponse = json.decode(response.body)['user_name'],
             jsonResponse2 = json.decode(response.body)['email'],
@@ -283,10 +277,8 @@ class _LoginPageState extends State<LoginPageState> {
 
   // logout api
   Future<void> logout() async {
-    await http.post(
-        Uri.parse("https://api.infotech.umm.ac.id/dotlab/api/v1/auth/logout"),
-        headers: {
-          "Authorization": "Bearer $access_token",
-        });
+    await http.post(Uri.parse("your api"), headers: {
+      "Authorization": "Bearer $access_token",
+    });
   }
 }

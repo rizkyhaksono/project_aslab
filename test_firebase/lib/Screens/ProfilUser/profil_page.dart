@@ -240,7 +240,7 @@ class _ProfilPageState extends State<ProfilPage> {
 
   Future<void> logout() async {
     http.post(
-        Uri.parse("https://api.infotech.umm.ac.id/dotlab/api/v1/auth/logout"),
+        Uri.parse("your api"),
         headers: {
           "Authorization": "Bearer $access_token",
         }).then((access) {
